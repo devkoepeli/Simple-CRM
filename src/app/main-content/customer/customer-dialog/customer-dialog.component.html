@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Add new customer</h2>
+
+<mat-dialog-content>
+    <div class="form-container">
+        <form (submit)="saveCustomer()" #form="ngForm">
+            <div class="input-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>First name</mat-label>
+                    <input matInput required name="firstName" [(ngModel)]="customer.firstName">
+                    <mat-error>You must enter a value</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Last name</mat-label>
+                    <input matInput required name="lastName" [(ngModel)]="customer.lastName">
+                    <mat-error>You must enter a value</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-container">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput required name="email" [(ngModel)]="customer.email"
+                    pattern="[^@]+@[^\.]+\..+"
+                    #email="ngModel">
+                    @if (email.errors?.['required']) {
+                        <mat-error>You must enter a value</mat-error>
+                    }
+                    @if (email.errors?.['pattern']) {
+                        <mat-error>You must enter a valid email</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="input-container">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Date of birth</mat-label>
+                    <input matInput name="date" [(ngModel)]="date" [matDatepicker]="datepicker">
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="input-container">
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Street & house number</mat-label>
+                    <input matInput required name="address" [(ngModel)]="customer.address">
+                    <mat-error>You must enter a value</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Zip code & town</mat-label>
+                    <input matInput required name="town" [(ngModel)]="customer.town">
+                    <mat-error>You must enter a value</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-dialog-actions align="end">
+                <button mat-button mat-dialog-close>Cancel</button>
+                <button mat-button [mat-dialog-close]="true" [disabled]="!form.valid" cdkFocusRegionstart
+                    type="submit">Add</button>
+            </mat-dialog-actions>
+        </form>
+    </div>
+</mat-dialog-content>

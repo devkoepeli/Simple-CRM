@@ -1,0 +1,10 @@
+@import '../../../shared/styles/mixins.scss';
+
+.input-container {
+   @include flexbox($gap: 24px);
+   padding-bottom: 8px; 
+}
+
+.form-field {
+    width: 100%;
+}
