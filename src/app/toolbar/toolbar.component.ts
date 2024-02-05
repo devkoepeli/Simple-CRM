@@ -3,6 +3,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer } from '@angular/material/sidenav';
+import { SidenavService } from '../services/sidenav.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,8 +13,10 @@ import { MatDrawer } from '@angular/material/sidenav';
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
-  @Input() sidenav!: MatDrawer;
 
-  constructor() {}
+  constructor(private sidenavService: SidenavService) {}
 
+  toggleSidenav() {
+    this.sidenavService.toggleSidenav();
+  }
 }

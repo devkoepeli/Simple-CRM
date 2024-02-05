@@ -1,3 +1,15 @@
-.h-100 {
+@import '../shared/styles/mixins.scss';
+
+.sidenav-container {
     height: 100%;
+}
+
+.sidenav {
+    width: 250px;
+}
+
+.logo-container {
+    padding: 16px;
+    height: 60px;
+    @include flexbox();
 }

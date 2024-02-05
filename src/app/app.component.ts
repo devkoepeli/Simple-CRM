@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { MainContentComponent } from './main-content/main-content.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,9 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   imports: [
     CommonModule,
     RouterOutlet,
-    SidenavComponent
+    SidenavComponent,
+    ToolbarComponent,
+    MainContentComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
