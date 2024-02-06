@@ -1,10 +1,52 @@
 <section>
-    <h2>Customer</h2>
+    <h2>Customers</h2>
+    <mat-card class="table-card">
+        <mat-card-content>
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef> First name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef> Last name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef> Address </th>
+                    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="city">
+                    <th mat-header-cell *matHeaderCellDef> Zip + City </th>
+                    <td mat-cell *matCellDef="let element"> {{element.zip}} {{element.city}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="birthdate">
+                    <th mat-header-cell *matHeaderCellDef> Date of birth </th>
+                    <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
     <div class="add-btn-container">
         <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
-            matTooltip="Add new customer"
-            (click)="openDialog()">
-          <mat-icon>add</mat-icon>
+            matTooltip="Add new customer" (click)="openDialog()">
+            <mat-icon>add</mat-icon>
         </button>
     </div>
 </section>

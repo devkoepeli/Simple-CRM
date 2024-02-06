@@ -34,9 +34,10 @@ export class CustomerDialogComponent {
     firstName: '',
     lastName: '',
     email: '',
-    birthDate: 0,
+    birthDate: '',
     address: '',
-    city: ''
+    city: '',
+    timestamp: new Date()
   };
 
   date!: Date;
@@ -52,7 +53,7 @@ export class CustomerDialogComponent {
   saveCustomer() {
     this.isLoading = true;
     if (this.date) {
-      this.customer.birthDate = this.date.getTime();
+      this.customer.birthDate = this.date.toISOString().slice(0, 10);;
     }
     this.firestore.addDocument('customers', this.getCleanObject(this.customer))
       .then(() => {
@@ -71,7 +72,8 @@ export class CustomerDialogComponent {
       birthDate: object.birthDate,
       address: object.address,
       zip: object.zip,
-      city: object.city
+      city: object.city,
+      timestamp: object.timestamp
     }
   }
 

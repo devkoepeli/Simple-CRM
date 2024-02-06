@@ -12,4 +12,8 @@
     padding: 16px;
     height: 60px;
     @include flexbox();
+
+    .logo-img {
+        width: 95%;
+    }
 }

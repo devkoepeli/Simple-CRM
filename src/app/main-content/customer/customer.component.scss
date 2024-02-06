@@ -1,5 +1,15 @@
+@import '../../shared/styles/mixins.scss';
+
+section {
+    position: relative;
+}
+
+h2 {
+    font-size: 32px;
+    padding-bottom: 16px;
+}
+
 .add-btn-container {
-    position: absolute;
-    right: 32px;
-    bottom: 32px;
+    @include flexbox($jc: end);
+    padding-top: 32px;
 }
