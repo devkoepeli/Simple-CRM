@@ -7,6 +7,7 @@ import { FloatLabelType, MatFormFieldModule } from '@angular/material/form-field
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Customer } from '../../../models/customer.interface';
+import { FirestoreService } from '../../../services/firestore/firestore.service';
 
 
 @Component({
@@ -32,17 +33,29 @@ export class CustomerDialogComponent {
     email: '',
     birthDate: 0,
     address: '',
-    town: ''
+    city: ''
   };
 
   date!: Date;
 
-  constructor() {}
+  constructor(private firestore: FirestoreService) { }
 
   saveCustomer() {
     if (this.date) {
       this.customer.birthDate = this.date.getTime();
     }
-    console.log(this.customer);
+    this.firestore.addDocument('customers', this.getCleanObject(this.customer));
+  }
+
+  getCleanObject(object: Customer) {
+    return {
+      firstName: object.firstName,
+      lastName: object.lastName,
+      email: object.email,
+      birthDate: object.birthDate,
+      address: object.address,
+      zip: object.zip,
+      city: object.city
+    }
   }
 }

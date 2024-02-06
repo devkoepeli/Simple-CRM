@@ -43,9 +43,16 @@
                     <input matInput required name="address" [(ngModel)]="customer.address">
                     <mat-error>You must enter a value</mat-error>
                 </mat-form-field>
+            </div>
+            <div class="input-container">
                 <mat-form-field appearance="fill" class="form-field">
-                    <mat-label>Zip code & town</mat-label>
-                    <input matInput required name="town" [(ngModel)]="customer.town">
+                    <mat-label>Zip code</mat-label>
+                    <input type="number" matInput required name="zip" [(ngModel)]="customer.zip">
+                    <mat-error>You must enter a value</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>City</mat-label>
+                    <input matInput required name="city" [(ngModel)]="customer.city">
                     <mat-error>You must enter a value</mat-error>
                 </mat-form-field>
             </div>

@@ -4,5 +4,6 @@ export interface Customer {
     email: string;
     birthDate: number;
     address: string;
-    town: string;
+    zip?: number;
+    city: string;
 }

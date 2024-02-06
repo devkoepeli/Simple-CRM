@@ -3,7 +3,7 @@ import { MatDrawer, MatSidenav, MatSidenavModule } from '@angular/material/siden
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
-import { SidenavService } from '../services/sidenav.service';
+import { SidenavService } from '../services/sidenav/sidenav.service';
 
 @Component({
   selector: 'app-sidenav',

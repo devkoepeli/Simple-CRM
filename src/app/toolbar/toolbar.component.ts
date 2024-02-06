@@ -3,7 +3,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer } from '@angular/material/sidenav';
-import { SidenavService } from '../services/sidenav.service';
+import { SidenavService } from '../services/sidenav/sidenav.service';
 
 @Component({
   selector: 'app-toolbar',
