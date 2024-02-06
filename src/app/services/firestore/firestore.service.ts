@@ -36,7 +36,7 @@ export class FirestoreService {
       })
       this.collectionSubject.next(customerCollection);
     }, (error) => {
-      console.error('loding data failed: ', error);
+      console.error('loading data failed: ', error);
     }
     )
   }

@@ -9,7 +9,6 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { Customer } from '../../models/customer.interface';
 import { FirestoreService } from '../../services/firestore/firestore.service';
-import { onSnapshot } from '@firebase/firestore';
 import { Unsubscribe } from '@angular/fire/firestore';
 
 
@@ -29,11 +28,11 @@ import { Unsubscribe } from '@angular/fire/firestore';
   templateUrl: './customer.component.html',
   styleUrl: './customer.component.scss'
 })
-export class CustomerComponent implements OnInit, AfterViewInit {
+export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
   customers: Customer[] = [];
 
   displayedColumns: string[] = ['firstName', 'lastName', 'address', 'city', 'birthdate', 'email'];
-  dataSource!: MatTableDataSource<Customer>;
+  dataSource = new MatTableDataSource<Customer>(this.customers)
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -54,7 +53,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   }
 
   refreshTable() {
-    this.dataSource = new MatTableDataSource<Customer>(this.customers);
+    this.dataSource.data = this.customers;
     this.dataSource.paginator = this.paginator;
   }
 
