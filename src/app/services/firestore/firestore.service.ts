@@ -10,13 +10,9 @@ export class FirestoreService {
 
   constructor() { }
 
-  async addDocument(colID: string,item: {}) {
-    try {
-      const docRef = await addDoc(this.getColRef(colID), item);
-      console.log('item was added successfully', docRef.id);
-    } catch(e) {
-      console.error(e);
-    }
+  async addDocument(colID: string, item: {}) {
+    const docRef = await addDoc(this.getColRef(colID), item);
+    console.log('item was added successfully', docRef.id);
   }
 
   getColRef(colID: string) {
