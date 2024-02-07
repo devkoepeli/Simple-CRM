@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Customer } from '../../models/customer.interface';
 import { FirestoreService } from '../../services/firestore/firestore.service';
@@ -15,6 +15,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CustomerDeleteDialogComponent } from './customer-delete-dialog/customer-delete-dialog.component';
 import { ParamsIdService } from '../../services/params-id/params-id.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-customer-edit',
@@ -29,7 +30,9 @@ import { ParamsIdService } from '../../services/params-id/params-id.service';
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatIconModule,
+    RouterLink
   ],
   templateUrl: './customer-edit.component.html',
   styleUrl: './customer-edit.component.scss'

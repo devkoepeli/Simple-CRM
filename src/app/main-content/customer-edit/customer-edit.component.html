@@ -3,7 +3,12 @@
         <mat-spinner></mat-spinner>
     </div>
 } @else {
-    <h2>Edit customer details</h2>
+    <div class="heading-container">
+        <h2>Edit customer details</h2>
+        <button routerLink="/customers" mat-icon-button color="primary" aria-label="Button with a arrow icon">
+            <mat-icon>west</mat-icon>
+        </button>
+    </div> 
     <mat-card>
         <mat-card-content>
             <div class="form-container">
@@ -78,8 +83,7 @@
                     <div class="buttons-container">
                         <button mat-raised-button [disabled]="isLoading" color="warn"
                             (click)="openDialog()">Delete</button>
-                        <button mat-raised-button
-                            mat-dialog-close [disabled]="isLoading">Cancel</button>
+                        <button mat-raised-button routerLink="/customers" [disabled]="isLoading">Cancel</button>
                         <button mat-raised-button color="primary"
                             [disabled]="!form.valid || isLoading"
                             cdkFocusRegionstart type="submit">Save</button>

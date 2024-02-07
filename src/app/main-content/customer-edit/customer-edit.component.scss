@@ -9,9 +9,14 @@
     @include flexbox();
 }
 
+.heading-container {
+    @include flexbox($jc: space-between);
+    padding-bottom: 32px;
+}
+
 h2 {
     font-size: 32px;
-    padding-bottom: 16px;
+    margin: 0;
 }
 
 .form-container {
