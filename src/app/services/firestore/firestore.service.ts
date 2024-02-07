@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { DocumentData, Firestore, onSnapshot, orderBy, query } from '@angular/fire/firestore';
+import { deleteDoc, DocumentData, Firestore, getDoc, onSnapshot, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { addDoc, collection, doc, DocumentReference } from '@firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Customer } from '../../models/customer.interface';
 
 @Injectable({
@@ -12,6 +12,8 @@ export class FirestoreService {
 
   private collectionSubject = new BehaviorSubject<Customer[]>([]);
   collection = this.collectionSubject.asObservable();
+
+  customerSubject = new Subject<Customer>();
 
   constructor() { }
 
@@ -32,7 +34,7 @@ export class FirestoreService {
     return onSnapshot(q, customers => {
       const customerCollection: Customer[] = [];
       customers.forEach(customer => {
-        customerCollection.push(this.setCustomerObject(customer.data()));
+        customerCollection.push(this.setCustomerObject(customer.data(), customer.id));
       })
       this.collectionSubject.next(customerCollection);
     }, (error) => {
@@ -41,9 +43,44 @@ export class FirestoreService {
     )
   }
 
-  setCustomerObject(customer: any): Customer {
+  snapshotCustomer(docId: string) {
+    return onSnapshot(this.getDocRef('customers', docId), customer => {
+      if (customer.exists()) {
+        this.customerSubject.next(this.setCustomerObject(customer.data(), customer.id));
+      }
+    })
+  }
+
+  async updateDocument(colId: string, item: Customer) {
+    if (item.id != undefined) {
+      const docRef = this.getDocRef(colId, item.id);
+      await updateDoc(docRef, this.getCleanCustomerObject(item))
+      .catch(err => console.error('Failed to update: ', err));
+    }
+  }
+
+  async deleteDocument(colId: string, docId: string) {
+    const docRef = this.getDocRef(colId, docId);
+    await deleteDoc(docRef);
+  }
+
+  setCustomerObject(customer: any, customerId: string): Customer {
     return {
         firstName: customer.firstName,
+        lastName: customer.lastName,
+        email: customer.email,
+        birthDate: customer.birthDate,
+        address: customer.address,
+        zip: customer.zip,
+        city: customer.city,
+        timestamp: customer.timestamp,
+        id: customerId,
+    }
+  }
+
+  getCleanCustomerObject(customer: Customer) {
+    return {
+      firstName: customer.firstName,
         lastName: customer.lastName,
         email: customer.email,
         birthDate: customer.birthDate,

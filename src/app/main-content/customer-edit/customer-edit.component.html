@@ -1,0 +1,91 @@
+@if (isLoading) {
+    <div class="loader-wrapper">
+        <mat-spinner></mat-spinner>
+    </div>
+} @else {
+    <h2>Edit customer details</h2>
+    <mat-card>
+        <mat-card-content>
+            <div class="form-container">
+                <form (submit)="updateCustomer()" #form="ngForm">
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="p-r">
+                            <mat-label>First name</mat-label>
+                            <input matInput required name="firstName" [(ngModel)]="customer.firstName"
+                                [disabled]="isLoading">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="p-l">
+                            <mat-label>Last name</mat-label>
+                            <input matInput required name="lastName" [(ngModel)]="customer.lastName" [disabled]="isLoading">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="p-r">
+                            <mat-label>Email</mat-label>
+                            <input matInput required name="email" [(ngModel)]="customer.email" pattern="[^@]+@[^\.]+\..+"
+                                #email="ngModel" [disabled]="isLoading">
+                            @if (email.errors?.['required']) {
+                            <mat-error>You must enter a value</mat-error>
+                            }
+                            @if (email.errors?.['pattern']) {
+                            <mat-error>You must enter a valid email</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="p-r">
+                            <mat-label>Date of birth</mat-label>
+                            <input matInput name="date" [(ngModel)]="customer.birthDate" [matDatepicker]="datepicker"
+                                [disabled]="isLoading">
+                            <mat-error>You must enter a valid date</mat-error>
+                            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="p-r">
+                            <mat-label>Street & house number</mat-label>
+                            <input matInput required name="address" [(ngModel)]="customer.address" [disabled]="isLoading">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="p-r">
+                            <mat-label>Zip code</mat-label>
+                            <input type="text" matInput required name="zip" [(ngModel)]="customer.zip"
+                                [disabled]="isLoading" pattern="\d{4}" #zip="ngModel">
+                            @if (zip.errors?.['required']) {
+                                <mat-error>You must enter a value</mat-error>
+                            }
+                            @if (zip.errors?.['pattern']) {
+                                <mat-error>You must enter a 4 digit zip code</mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="p-l">
+                            <mat-label>City</mat-label>
+                            <input matInput required name="city" pattern="[A-Za-z ]*" [(ngModel)]="customer.city" [disabled]="isLoading"
+                                #city="ngModel">
+                            @if (city.errors?.['required']) {
+                                <mat-error>You must enter a value</mat-error>
+                            }
+                            @if (city.errors?.['pattern']) {
+                                <mat-error>Value can contain only characters</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="buttons-container">
+                        <button mat-raised-button [disabled]="isLoading" color="warn"
+                            (click)="openDialog()">Delete</button>
+                        <button mat-raised-button
+                            mat-dialog-close [disabled]="isLoading">Cancel</button>
+                        <button mat-raised-button color="primary"
+                            [disabled]="!form.valid || isLoading"
+                            cdkFocusRegionstart type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+}

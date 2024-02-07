@@ -10,6 +10,7 @@ import { Customer } from '../../../models/customer.interface';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
+import { MessageAnimationComponent } from '../../../shared/components/message-animation/message-animation.component';
 
 @Component({
   selector: 'app-customer-dialog',
@@ -24,7 +25,8 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatDatepickerModule,
     MatProgressBarModule,
-    MatCardModule
+    MatCardModule,
+    MessageAnimationComponent
   ],
   templateUrl: './customer-dialog.component.html',
   styleUrl: './customer-dialog.component.scss'

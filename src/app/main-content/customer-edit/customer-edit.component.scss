@@ -1,0 +1,44 @@
+@import '../../shared/styles/mixins.scss';
+
+.loader-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    @include flexbox();
+}
+
+h2 {
+    font-size: 32px;
+    padding-bottom: 16px;
+}
+
+.form-container {
+    padding-top: 8px;
+    width: 100%;
+
+    .input-container {
+        width: 100%;
+
+        mat-form-field {
+            width: 50%;
+        }
+
+        .p-r {
+            padding-right: 8px;
+        }
+
+        .p-l {
+            padding-left: 8px;
+        }
+    }
+
+    .buttons-container {
+        @include flexbox($jc: end, $gap: 16px);
+
+        button {
+            font-size: 16px;
+        }
+    }
+}

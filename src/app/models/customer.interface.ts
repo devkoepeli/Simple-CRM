@@ -7,4 +7,5 @@ export interface Customer {
     zip?: number;
     city: string;
     timestamp: Date;
+    id?: string;
 }

@@ -75,25 +75,19 @@
                     </mat-form-field>
                 </div>
                 <mat-dialog-actions align="end">
-                    <button mat-button mat-dialog-close [disabled]="isLoading">Cancel</button>
-                    <button mat-button [disabled]="!form.valid || isLoading"
+                    <button mat-raised-button
+                        mat-dialog-close [disabled]="isLoading">Cancel</button>
+                    <button mat-raised-button color="primary"
+                        [disabled]="!form.valid || isLoading"
                         cdkFocusRegionstart type="submit">Add</button>
                 </mat-dialog-actions>
             </form>
         </div>
     </mat-dialog-content>
     @if (showSuccess) {
-        <div class="success-wrapper">
-            <mat-card class="success">
-                <mat-card-content>Customer added successfully</mat-card-content>
-            </mat-card>
-        </div>
+        <app-message-animation class="success">Customer added successfully</app-message-animation>
     }
     @if (showError) {
-        <div class="error-wrapper">
-            <mat-card class="error">
-                <mat-card-content>Failed to add customer</mat-card-content>
-            </mat-card>
-        </div>
+        <app-message-animation class="error">Failed to add customer</app-message-animation>
     }
 </div>

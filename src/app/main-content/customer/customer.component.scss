@@ -13,3 +13,22 @@ h2 {
     @include flexbox($jc: end);
     padding-top: 32px;
 }
+
+tr {
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(63, 81, 181, 0.04);
+    }
+}
+
+.header-row {
+    &:hover {
+        background: unset;
+        cursor: unset;
+    }
+}
+
+.paginator {
+    padding-top: 8px;
+}

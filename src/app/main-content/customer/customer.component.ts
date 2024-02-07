@@ -10,6 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { Customer } from '../../models/customer.interface';
 import { FirestoreService } from '../../services/firestore/firestore.service';
 import { Unsubscribe } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -23,7 +25,8 @@ import { Unsubscribe } from '@angular/fire/firestore';
     CustomerDialogComponent,
     MatTableModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    RouterLink
   ],
   templateUrl: './customer.component.html',
   styleUrl: './customer.component.scss'
@@ -31,14 +34,19 @@ import { Unsubscribe } from '@angular/fire/firestore';
 export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
   customers: Customer[] = [];
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'address', 'city', 'birthdate', 'email'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'address', 'city', 'birthdate', 'email', 'edit'];
   dataSource = new MatTableDataSource<Customer>(this.customers)
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   unsubCustomers!: Unsubscribe;
+  unsubCollection!: Subscription;
 
-  constructor(public dialog: MatDialog, private firestore: FirestoreService) { }
+  constructor(
+    public dialog: MatDialog,
+    private firestore: FirestoreService,
+    private router: Router,
+    ) { }
 
   openDialog() {
     this.dialog.open(CustomerDialogComponent);
@@ -46,7 +54,7 @@ export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.unsubCustomers = this.firestore.snapshotCustomers();
-    this.firestore.collection.subscribe(customerArr => {
+    this.unsubCollection = this.firestore.collection.subscribe(customerArr => {
       this.customers = customerArr;
       this.refreshTable();
     })
@@ -63,5 +71,10 @@ export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubCustomers();
+    this.unsubCollection.unsubscribe();
+  }
+
+  editCustomer(customer: Customer) {
+    this.router.navigate(['customers/edit/' + customer.id]);
   }
 }

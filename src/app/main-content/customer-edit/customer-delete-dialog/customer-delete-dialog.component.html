@@ -1,0 +1,20 @@
+<div class="dialog-container">
+    @if (isLoading) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    <h2 mat-dialog-title>Delete customer</h2>
+    <mat-dialog-content>
+        <div class="info">Would you like to delete this customer?</div>
+        <div class="buttons">
+            <button mat-raised-button mat-dialog-close [disabled]="isLoading">Cancel</button>
+            <button mat-raised-button cdkFocusRegionstart
+            color="warn" [disabled]="isLoading" (click)="deleteCustomer()">Delete</button>
+        </div>
+    </mat-dialog-content>
+    @if (showSuccess) {
+        <app-message-animation class="success">Customer successfully deleted</app-message-animation>
+    }
+    @if (showError) {
+        <app-message-animation class="error">Failed to delete</app-message-animation>
+    }
+</div>

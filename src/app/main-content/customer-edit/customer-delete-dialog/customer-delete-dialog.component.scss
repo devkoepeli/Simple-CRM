@@ -1,0 +1,14 @@
+
+.info {
+    padding-bottom: 24px;
+}
+
+.buttons {
+    button {
+        font-size: 16px;
+    }
+
+    & > button {
+        margin-right: 16px;
+    }
+}
