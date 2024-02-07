@@ -16,6 +16,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CustomerDeleteDialogComponent } from './customer-delete-dialog/customer-delete-dialog.component';
 import { ParamsIdService } from '../../services/params-id/params-id.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-customer-edit',
@@ -32,7 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatDialogModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
+    MatTooltip
   ],
   templateUrl: './customer-edit.component.html',
   styleUrl: './customer-edit.component.scss'

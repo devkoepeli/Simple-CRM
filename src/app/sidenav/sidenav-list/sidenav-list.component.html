@@ -1,8 +1,8 @@
 <ul>
     <li class="list-item">
-        <a routerLink="/"><mat-icon>dashboard</mat-icon>Dashboard</a>
+        <a [class.active]="isDashboard" routerLink="/"><mat-icon>dashboard</mat-icon>Dashboard</a>
     </li>
     <li class="list-item">
-        <a routerLink="/customers"><mat-icon>person</mat-icon>Customers</a>
+        <a [class.active]="isCustomers" routerLink="/customers"><mat-icon>person</mat-icon>Customers</a>
     </li>
 </ul>

@@ -2,6 +2,8 @@
 
 ul {
     list-style-type: none;
+    position: relative;
+    z-index: 1;
 }
 
 .list-item {
@@ -14,8 +16,12 @@ ul {
         cursor: pointer;
 
         &:hover {
-            background-color: rgba(63, 81, 181, 0.08);
+            background-color: rgba(63, 81, 181, 0.1);
             text-decoration: none;
         }
     }
+}
+
+.active {
+    background-color: rgba(63, 81, 181, 0.08);
 }
