@@ -54,8 +54,7 @@ export class FirestoreService {
   async updateDocument(colId: string, item: Customer) {
     if (item.id != undefined) {
       const docRef = this.getDocRef(colId, item.id);
-      await updateDoc(docRef, this.getCleanCustomerObject(item))
-      .catch(err => console.error('Failed to update: ', err));
+      await updateDoc(docRef, this.getCleanCustomerObject(item));
     }
   }
 

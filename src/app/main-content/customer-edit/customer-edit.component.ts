@@ -17,6 +17,7 @@ import { CustomerDeleteDialogComponent } from './customer-delete-dialog/customer
 import { ParamsIdService } from '../../services/params-id/params-id.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MessageAnimationComponent } from '../../shared/components/message-animation/message-animation.component';
 
 @Component({
   selector: 'app-customer-edit',
@@ -34,7 +35,8 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatDialogModule,
     MatIconModule,
     RouterLink,
-    MatTooltip
+    MatTooltip,
+    MessageAnimationComponent
   ],
   templateUrl: './customer-edit.component.html',
   styleUrl: './customer-edit.component.scss'
@@ -44,8 +46,13 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   customerId!: string;
   unsubCustomer!: Unsubscribe;
   unsubCustomerData!: Subscription;
-
+  
   isLoading = false;
+  isSaving = false;
+  isSuccess = false;
+  isError = false;
+
+  date!: Date;
 
   constructor(
     private route: ActivatedRoute,
@@ -79,6 +86,31 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   }
 
   updateCustomer() {
+    this.isSaving = true;
+    try {
+      this.savingSuccess();
+    } catch(e) {
+      this.savingError();
+    }
+  }
 
+  async savingSuccess() {
+    if (this.customer.birthDate instanceof Date) {
+      this.customer.birthDate = this.customer.birthDate.toISOString().slice(0, 10);
+    }
+    await this.firestore.updateDocument('customers', this.customer);
+    this.isSaving = false;
+    this.isSuccess = true;
+    setTimeout(() => {
+      this.isSuccess = false;
+    }, 1800);
+  }
+
+  savingError() {
+    this.isSaving = false;
+    this.isError = true;
+    setTimeout(() => {
+      this.isError = false;
+    }, 1800);
   }
 }

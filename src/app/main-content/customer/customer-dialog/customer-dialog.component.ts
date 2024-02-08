@@ -55,7 +55,7 @@ export class CustomerDialogComponent {
   saveCustomer() {
     this.isLoading = true;
     if (this.date) {
-      this.customer.birthDate = this.date.toISOString().slice(0, 10);;
+      this.customer.birthDate = this.date.toISOString().slice(0, 10);
     }
     this.firestore.addDocument('customers', this.getCleanObject(this.customer))
       .then(() => {

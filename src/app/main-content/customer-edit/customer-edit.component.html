@@ -19,12 +19,12 @@
                         <mat-form-field appearance="fill" class="p-r">
                             <mat-label>First name</mat-label>
                             <input matInput required name="firstName" [(ngModel)]="customer.firstName"
-                                [disabled]="isLoading">
+                                [disabled]="isSaving">
                             <mat-error>You must enter a value</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="fill" class="p-l">
                             <mat-label>Last name</mat-label>
-                            <input matInput required name="lastName" [(ngModel)]="customer.lastName" [disabled]="isLoading">
+                            <input matInput required name="lastName" [(ngModel)]="customer.lastName" [disabled]="isSaving">
                             <mat-error>You must enter a value</mat-error>
                         </mat-form-field>
                     </div>
@@ -32,7 +32,7 @@
                         <mat-form-field appearance="fill" class="p-r">
                             <mat-label>Email</mat-label>
                             <input matInput required name="email" [(ngModel)]="customer.email" pattern="[^@]+@[^\.]+\..+"
-                                #email="ngModel" [disabled]="isLoading">
+                                #email="ngModel" [disabled]="isSaving">
                             @if (email.errors?.['required']) {
                             <mat-error>You must enter a value</mat-error>
                             }
@@ -45,7 +45,7 @@
                         <mat-form-field appearance="fill" class="p-r">
                             <mat-label>Date of birth</mat-label>
                             <input matInput name="date" [(ngModel)]="customer.birthDate" [matDatepicker]="datepicker"
-                                [disabled]="isLoading">
+                                [disabled]="isSaving">
                             <mat-error>You must enter a valid date</mat-error>
                             <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                             <mat-datepicker #datepicker></mat-datepicker>
@@ -54,7 +54,7 @@
                     <div class="input-container">
                         <mat-form-field appearance="fill" class="p-r">
                             <mat-label>Street & house number</mat-label>
-                            <input matInput required name="address" [(ngModel)]="customer.address" [disabled]="isLoading">
+                            <input matInput required name="address" [(ngModel)]="customer.address" [disabled]="isSaving">
                             <mat-error>You must enter a value</mat-error>
                         </mat-form-field>
                     </div>
@@ -62,7 +62,7 @@
                         <mat-form-field appearance="fill" class="p-r">
                             <mat-label>Zip code</mat-label>
                             <input type="text" matInput required name="zip" [(ngModel)]="customer.zip"
-                                [disabled]="isLoading" pattern="\d{4}" #zip="ngModel">
+                                [disabled]="isSaving" pattern="\d{4}" #zip="ngModel">
                             @if (zip.errors?.['required']) {
                                 <mat-error>You must enter a value</mat-error>
                             }
@@ -72,7 +72,7 @@
                         </mat-form-field>
                         <mat-form-field appearance="fill" class="p-l">
                             <mat-label>City</mat-label>
-                            <input matInput required name="city" pattern="[A-Za-z ]*" [(ngModel)]="customer.city" [disabled]="isLoading"
+                            <input matInput required name="city" pattern="[A-Za-z ]*" [(ngModel)]="customer.city" [disabled]="isSaving"
                                 #city="ngModel">
                             @if (city.errors?.['required']) {
                                 <mat-error>You must enter a value</mat-error>
@@ -83,15 +83,29 @@
                         </mat-form-field>
                     </div>
                     <div class="buttons-container">
-                        <button mat-raised-button [disabled]="isLoading" color="warn"
+                        <button mat-raised-button [disabled]="isSaving" color="warn"
+                            type="button"
                             (click)="openDialog()">Delete</button>
-                        <button mat-raised-button routerLink="/customers" [disabled]="isLoading">Cancel</button>
+                        <button mat-raised-button routerLink="/customers" [disabled]="isSaving"
+                            type="button">Cancel</button>
                         <button mat-raised-button color="primary"
-                            [disabled]="!form.valid || isLoading"
-                            cdkFocusRegionstart type="submit">Save</button>
+                            [disabled]="!form.valid || isSaving"
+                            cdkFocusRegionstart type="submit"
+                            (click)="updateCustomer()">Save</button>
                     </div>
                 </form>
             </div>
         </mat-card-content>
     </mat-card>
+   @if (isSaving) {
+        <div class="loader-wrapper">
+            <mat-spinner></mat-spinner>
+        </div>
+   }
+   @if (isSuccess) {
+        <app-message-animation class="success">Customer successfully updated</app-message-animation>
+   }
+   @if (isError) {
+        <app-message-animation class="error">Failed to update!</app-message-animation>
+   }
 }

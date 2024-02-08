@@ -2,7 +2,7 @@ export interface Customer {
     firstName: string;
     lastName: string;
     email: string;
-    birthDate: string;
+    birthDate: string | Date;
     address: string;
     zip?: number;
     city: string;
