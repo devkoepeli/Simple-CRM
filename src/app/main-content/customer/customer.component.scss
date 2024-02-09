@@ -32,3 +32,17 @@ tr {
 .paginator {
     padding-top: 8px;
 }
+
+.td-first,
+.th-first {
+    width: 60px;
+}
+
+.customer-img {
+    display: block;
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    object-position: center;
+    clip-path: circle(50%);
+}

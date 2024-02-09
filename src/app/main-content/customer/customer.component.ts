@@ -34,7 +34,7 @@ import { Router, RouterLink } from '@angular/router';
 export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
   customers: Customer[] = [];
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'address', 'city', 'birthdate', 'email', 'edit'];
+  displayedColumns: string[] = ['image', 'firstName', 'lastName', 'address', 'city', 'birthdate', 'email', 'edit'];
   dataSource = new MatTableDataSource<Customer>(this.customers)
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

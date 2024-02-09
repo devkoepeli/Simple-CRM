@@ -4,6 +4,12 @@
         <mat-card-content>
             <table mat-table [dataSource]="dataSource">
 
+                <ng-container matColumnDef="image">
+                    <th class="th-first" mat-header-cell *matHeaderCellDef></th>
+                    <td class="td-first" mat-cell *matCellDef="let element">
+                        <img class="customer-img" [src]="element.imageUrl || './assets/images/profile-img.png'" alt="Customer Picture"></td>
+                </ng-container>
+
                 <ng-container matColumnDef="firstName">
                     <th mat-header-cell *matHeaderCellDef> First name </th>
                     <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>

@@ -8,4 +8,5 @@ export interface Customer {
     city: string;
     timestamp: Date;
     id?: string;
+    imageUrl: string;
 }

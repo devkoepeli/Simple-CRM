@@ -39,7 +39,8 @@ export class CustomerDialogComponent {
     birthDate: '',
     address: '',
     city: '',
-    timestamp: new Date()
+    timestamp: new Date(),
+    imageUrl: ''
   };
 
   date!: Date;

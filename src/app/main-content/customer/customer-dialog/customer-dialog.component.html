@@ -64,7 +64,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="form-field">
                         <mat-label>City</mat-label>
-                        <input matInput required name="city" pattern="[A-Za-z ]*" [(ngModel)]="customer.city" [disabled]="isLoading"
+                        <input matInput required name="city" pattern="[^0-9]*" [(ngModel)]="customer.city" [disabled]="isLoading"
                             #city="ngModel">
                         @if (city.errors?.['required']) {
                             <mat-error>You must enter a value</mat-error>

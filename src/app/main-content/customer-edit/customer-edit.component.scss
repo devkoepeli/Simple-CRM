@@ -22,6 +22,11 @@ h2 {
 .form-container {
     padding-top: 8px;
     width: 100%;
+    @include flexbox($jc: space-between, $gap: 32px);
+
+    .form {
+        width: 70%;
+    }
 
     .input-container {
         width: 100%;
@@ -37,6 +42,10 @@ h2 {
         .p-l {
             padding-left: 8px;
         }
+
+        .w-100 {
+            width: 100%;
+        }
     }
 
     .buttons-container {
@@ -45,5 +54,25 @@ h2 {
         button {
             font-size: 16px;
         }
+    }
+}
+
+.img-container {
+    width: 30%;
+    @include flexbox($fd: column, $gap: 12px);
+    padding-bottom: 32px;
+
+    img {
+        display: block;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        object-position: center;
+        clip-path: circle(50%);
+    }
+
+    .upload {
+        @include flexbox();
+        cursor: pointer;
     }
 }

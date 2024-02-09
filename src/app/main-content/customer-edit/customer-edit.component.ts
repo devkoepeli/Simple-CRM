@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/firestore';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,9 @@ import { ParamsIdService } from '../../services/params-id/params-id.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MessageAnimationComponent } from '../../shared/components/message-animation/message-animation.component';
+import { Storage, getStorage, ref } from '@angular/fire/storage';
+import { getDownloadURL, uploadBytes, UploadResult, uploadString } from '@firebase/storage';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-customer-edit',
@@ -36,7 +39,8 @@ import { MessageAnimationComponent } from '../../shared/components/message-anima
     MatIconModule,
     RouterLink,
     MatTooltip,
-    MessageAnimationComponent
+    MessageAnimationComponent,
+    CommonModule
   ],
   templateUrl: './customer-edit.component.html',
   styleUrl: './customer-edit.component.scss'
@@ -53,6 +57,9 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   isError = false;
 
   date!: Date;
+
+  storage = inject(Storage)
+  loadingStatus: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; 
 
   constructor(
     private route: ActivatedRoute,
@@ -112,5 +119,35 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.isError = false;
     }, 1800);
+  }
+
+  async uploadImage(event: any) {
+    const file: File = event.target.files[0];
+    const fileName = `images/${file.name}`
+
+    const storageRef = this.storageRef(fileName);
+    console.log(file);
+
+    if (file) {
+      this.loadingStatus = 'uploading';
+      try {
+        const uploadResult = await uploadBytes(storageRef, file);
+        this.downloadUrl(uploadResult);
+      } catch(e) {
+        this.loadingStatus = 'fail';
+      }
+    }
+  }
+
+  async downloadUrl(uploadResult: UploadResult) {
+    const downloadUrl = await getDownloadURL(uploadResult.ref);
+    this.customer.imageUrl = downloadUrl;
+    this.loadingStatus = 'success';
+  }
+
+  storageRef(fileName: string) {
+    const storage = getStorage();
+    const storageRef = ref(storage, fileName);
+    return storageRef;
   }
 }

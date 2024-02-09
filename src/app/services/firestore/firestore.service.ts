@@ -74,6 +74,7 @@ export class FirestoreService {
         city: customer.city,
         timestamp: customer.timestamp,
         id: customerId,
+        imageUrl: customer.imageUrl
     }
   }
 
@@ -86,7 +87,8 @@ export class FirestoreService {
         address: customer.address,
         zip: customer.zip,
         city: customer.city,
-        timestamp: customer.timestamp
+        timestamp: customer.timestamp,
+        imageUrl: customer.imageUrl
     }
   }
 }
