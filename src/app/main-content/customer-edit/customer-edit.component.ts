@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MessageAnimationComponent } from '../../shared/components/message-animation/message-animation.component';
 import { Storage, getStorage, ref } from '@angular/fire/storage';
-import { getDownloadURL, uploadBytes, UploadResult, uploadString } from '@firebase/storage';
+import { getDownloadURL, uploadBytes, UploadResult } from '@firebase/storage';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -126,7 +126,6 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     const fileName = `images/${file.name}`
 
     const storageRef = this.storageRef(fileName);
-    console.log(file);
 
     if (file) {
       this.loadingStatus = 'uploading';
