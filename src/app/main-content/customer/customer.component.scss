@@ -15,11 +15,14 @@ h2 {
 }
 
 tr {
-    cursor: pointer;
-
     &:hover {
         background: rgba(63, 81, 181, 0.04);
     }
+}
+
+td {
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .header-row {
@@ -40,8 +43,8 @@ tr {
 
 .customer-img {
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
     object-fit: cover;
     object-position: center;
     clip-path: circle(50%);

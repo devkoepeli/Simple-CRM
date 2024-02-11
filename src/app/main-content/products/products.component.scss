@@ -1,4 +1,80 @@
+@import '../../shared/styles/mixins.scss';
+@import '../../shared/styles/variables.scss';
+
+section {
+    position: relative;
+}
+
 h2 {
     font-size: 32px;
     padding-bottom: 16px;
+}
+
+.add-btn-container {
+    @include flexbox($jc: end);
+    padding-top: 32px;
+}
+
+tr {
+    &:hover {
+        background: rgba(63, 81, 181, 0.04);
+    }
+}
+
+td {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.header-row {
+    &:hover {
+        background: unset;
+        cursor: unset;
+    }
+}
+
+.paginator {
+    padding-top: 8px;
+}
+
+.td-first,
+.th-first {
+    width: 60px;
+}
+
+.product-img {
+    display: block;
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+}
+
+.status-active {
+    color: green;
+    background-color: rgba(0, 128, 0, 0.16);
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.status-draft {
+    color: orange;
+    background-color: rgba(255, 166, 0, 0.16);
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.status-archived {
+    color: red;
+    background-color: rgba(255, 0, 0, 0.16);
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.edit-button {
+    border-color: $main-color !important;
 }
