@@ -9,7 +9,7 @@ export class StorageService {
 
   constructor() { }
 
-  async uploadImage(file: File) {
+  async uploadImage(file: File): Promise<string> {
     const fileName = `images/${file.name}`;
     const storageRef = this.storageRef(fileName);
 
@@ -17,7 +17,7 @@ export class StorageService {
     return await this.downloadUrl(uploadTask);
   }
 
-  private async downloadUrl(uploadResult: UploadResult) {
+  private async downloadUrl(uploadResult: UploadResult): Promise<string> {
     const downloadUrl = await getDownloadURL(uploadResult.ref);
     return downloadUrl;
   }

@@ -3,5 +3,7 @@ export interface Product {
     status: 'active' | 'draft' | 'archived',
     inventory: number,
     price: number,
-    imageUrl: string
+    imageUrl: string,
+    timeStamp: Date,
+    id?: string
 }

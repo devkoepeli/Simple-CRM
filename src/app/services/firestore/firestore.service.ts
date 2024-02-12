@@ -3,6 +3,7 @@ import { deleteDoc, DocumentData, Firestore, getDoc, onSnapshot, orderBy, query,
 import { addDoc, collection, doc, DocumentReference } from '@firebase/firestore';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Customer } from '../../models/customer.interface';
+import { Product } from '../../models/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,11 @@ import { Customer } from '../../models/customer.interface';
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
 
-  private collectionSubject = new BehaviorSubject<Customer[]>([]);
-  collection = this.collectionSubject.asObservable();
+  private customersSubject = new BehaviorSubject<Customer[]>([]);
+  customers$ = this.customersSubject.asObservable();
+
+  private productsSubject = new BehaviorSubject<Product[]>([]);
+  products$ = this.productsSubject.asObservable();
 
   customerSubject = new Subject<Customer>();
 
@@ -36,7 +40,7 @@ export class FirestoreService {
       customers.forEach(customer => {
         customerCollection.push(this.setCustomerObject(customer.data(), customer.id));
       })
-      this.collectionSubject.next(customerCollection);
+      this.customersSubject.next(customerCollection);
     }, (error) => {
       console.error('loading data failed: ', error);
     }
@@ -48,6 +52,19 @@ export class FirestoreService {
       if (customer.exists()) {
         this.customerSubject.next(this.setCustomerObject(customer.data(), customer.id));
       }
+    })
+  }
+
+  snapshotProducts() {
+    const q = query(this.getColRef('products'), orderBy('timeStamp', 'desc'));
+    return onSnapshot(q, products => {
+      const productCollection: Product[] = [];
+      products.forEach(product => {
+        productCollection.push(this.setProductObject(product.data(), product.id));
+      });
+      this.productsSubject.next(productCollection);
+    }, (error) => {
+      console.error('loading data failed: ', error);
     })
   }
 
@@ -89,6 +106,18 @@ export class FirestoreService {
         city: customer.city,
         timestamp: customer.timestamp,
         imageUrl: customer.imageUrl
+    }
+  }
+
+  setProductObject(product: any, productId: string): Product {
+    return {
+      name: product.name,
+      status: product.status,
+      inventory: product.inventory,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      timeStamp: product.timeStamp,
+      id: productId
     }
   }
 }
