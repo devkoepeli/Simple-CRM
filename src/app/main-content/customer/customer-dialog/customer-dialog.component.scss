@@ -1,5 +1,41 @@
 @import '../../../shared/styles/mixins.scss';
 
+.dialog-subcontainer {
+    @include flexbox($fd: column);
+}
+
+.upload-image-container {
+    position: relative;
+    margin-bottom: 32px;
+
+    .customer-img {
+        display: block;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        object-position: center;
+        clip-path: circle(50%);
+    }
+
+    .upload {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+    }
+}
+
+.img-spinner-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include flexbox();
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.1);
+}
+
 .input-container {
    @include flexbox($gap: 24px);
    padding-bottom: 8px; 

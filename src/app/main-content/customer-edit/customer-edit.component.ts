@@ -18,9 +18,8 @@ import { ParamsIdService } from '../../services/params-id/params-id.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MessageAnimationComponent } from '../../shared/components/message-animation/message-animation.component';
-import { Storage, getStorage, ref } from '@angular/fire/storage';
-import { getDownloadURL, uploadBytes, UploadResult } from '@firebase/storage';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-customer-edit',
@@ -58,7 +57,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
 
   date!: Date;
 
-  storage = inject(Storage)
+  storageService = inject(StorageService);
   loadingStatus: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; 
 
   constructor(
@@ -121,32 +120,18 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     }, 1800);
   }
 
-  async uploadImage(event: any) {
-    const file: File = event.target.files[0];
-    const fileName = `images/${file.name}`
-
-    const storageRef = this.storageRef(fileName);
+  async onImageSelected(event: any) {
+    const file = event.target.files[0];
 
     if (file) {
-      this.loadingStatus = 'uploading';
       try {
-        const uploadResult = await uploadBytes(storageRef, file);
-        this.downloadUrl(uploadResult);
+        this.loadingStatus = 'uploading';
+        const downloadUrl = await this.storageService.uploadImage(file);
+        this.customer.imageUrl = downloadUrl;
+        this.loadingStatus = 'success';
       } catch(e) {
         this.loadingStatus = 'fail';
       }
     }
-  }
-
-  async downloadUrl(uploadResult: UploadResult) {
-    const downloadUrl = await getDownloadURL(uploadResult.ref);
-    this.customer.imageUrl = downloadUrl;
-    this.loadingStatus = 'success';
-  }
-
-  storageRef(fileName: string) {
-    const storage = getStorage();
-    const storageRef = ref(storage, fileName);
-    return storageRef;
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +11,11 @@ import { FirestoreService } from '../../../services/firestore/firestore.service'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MessageAnimationComponent } from '../../../shared/components/message-animation/message-animation.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StorageService } from '../../../services/storage/storage.service';
 
 @Component({
   selector: 'app-customer-dialog',
@@ -26,7 +31,11 @@ import { MessageAnimationComponent } from '../../../shared/components/message-an
     MatDatepickerModule,
     MatProgressBarModule,
     MatCardModule,
-    MessageAnimationComponent
+    MessageAnimationComponent,
+    MatIconModule,
+    MatTooltipModule,
+    CommonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './customer-dialog.component.html',
   styleUrl: './customer-dialog.component.scss'
@@ -47,11 +56,11 @@ export class CustomerDialogComponent {
   isLoading = false;
   showError = false;
   showSuccess = false;
+  loadingStatus: 'initial' | 'uploading' | 'success' | 'fail' = 'initial';
 
-  constructor(
-    private firestore: FirestoreService,
-    public dialogRef: MatDialogRef<CustomerDialogComponent>,
-  ) { }
+  firestore = inject(FirestoreService);
+  dialogRef = inject(MatDialogRef<CustomerDialogComponent>);
+  storageService = inject(StorageService);
 
   saveCustomer() {
     this.isLoading = true;
@@ -76,7 +85,8 @@ export class CustomerDialogComponent {
       address: object.address,
       zip: object.zip,
       city: object.city,
-      timestamp: object.timestamp
+      timestamp: object.timestamp,
+      imageUrl: object.imageUrl
     }
   }
 
@@ -96,5 +106,23 @@ export class CustomerDialogComponent {
       this.showError = false;
       this.dialogRef.close();
     }, 1800);
+  }
+
+  async onImageSelected(event: any) {
+    const file = event.target.files[0];
+
+    if (file) {
+      try {
+        this.loadingStatus = 'uploading';
+        const downloadUrl = await this.storageService.uploadImage(file);
+        this.customer.imageUrl = downloadUrl;
+        this.loadingStatus = 'success';
+      } catch(e) {
+        this.loadingStatus = 'fail';
+        setTimeout(() => {
+          this.loadingStatus = 'initial';
+        }, 1800);
+      }
+    }
   }
 }

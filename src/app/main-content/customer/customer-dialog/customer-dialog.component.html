@@ -2,86 +2,103 @@
     @if (isLoading) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     }
+
     <h2 mat-dialog-title>Add new customer</h2>
 
     <mat-dialog-content>
-        <div class="form-container">
-            <form (submit)="saveCustomer()" #form="ngForm">
-                <div class="input-container">
-                    <mat-form-field appearance="fill">
-                        <mat-label>First name</mat-label>
-                        <input matInput required name="firstName" [(ngModel)]="customer.firstName"
-                            [disabled]="isLoading">
-                        <mat-error>You must enter a value</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Last name</mat-label>
-                        <input matInput required name="lastName" [(ngModel)]="customer.lastName" [disabled]="isLoading">
-                        <mat-error>You must enter a value</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="input-container">
-                    <mat-form-field appearance="fill" class="form-field">
-                        <mat-label>Email</mat-label>
-                        <input matInput required name="email" [(ngModel)]="customer.email" pattern="[^@]+@[^\.]+\..+"
-                            #email="ngModel" [disabled]="isLoading">
-                        @if (email.errors?.['required']) {
-                        <mat-error>You must enter a value</mat-error>
-                        }
-                        @if (email.errors?.['pattern']) {
-                        <mat-error>You must enter a valid email</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="input-container">
-                    <mat-form-field appearance="fill" class="form-field">
-                        <mat-label>Date of birth</mat-label>
-                        <input matInput name="date" [(ngModel)]="date" [matDatepicker]="datepicker"
-                            [disabled]="isLoading">
-                        <mat-error>You must enter a valid date</mat-error>
-                        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                        <mat-datepicker #datepicker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="input-container">
-                    <mat-form-field appearance="fill" class="form-field">
-                        <mat-label>Street & house number</mat-label>
-                        <input matInput required name="address" [(ngModel)]="customer.address" [disabled]="isLoading">
-                        <mat-error>You must enter a value</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="input-container">
-                    <mat-form-field appearance="fill" class="form-field">
-                        <mat-label>Zip code</mat-label>
-                        <input type="text" matInput required name="zip" [(ngModel)]="customer.zip"
-                            [disabled]="isLoading" pattern="\d{4}" #zip="ngModel">
-                        @if (zip.errors?.['required']) {
+        <div class="dialog-subcontainer">
+            <div class="upload-image-container">
+                <img class="customer-img" [src]="customer.imageUrl || './assets/images/profile-img.png'" alt="">
+                <input type="file" (change)="onImageSelected($event)" hidden #fileInput accept=".jpg,.jpeg,.png">
+                <button (click)="fileInput.click()" class="upload" mat-mini-fab color="accent" 
+                    aria-label="Example icon button with a menu icon"
+                    matTooltip="Upload image">
+                    <mat-icon>upload</mat-icon>
+                </button>
+            </div>
+            <div class="img-loading-container" [ngSwitch]="loadingStatus">
+                <div *ngSwitchCase="'uploading'" class="img-spinner-container"><mat-spinner></mat-spinner></div>
+                <app-message-animation *ngSwitchCase="'fail'" class="error">Failed to upload image</app-message-animation>
+            </div>
+
+            <div class="form-container">
+                <form (submit)="saveCustomer()" #form="ngForm">
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>First name</mat-label>
+                            <input matInput required name="firstName" [(ngModel)]="customer.firstName"
+                                [disabled]="isLoading">
                             <mat-error>You must enter a value</mat-error>
-                        }
-                        @if (zip.errors?.['pattern']) {
-                            <mat-error>You must enter a 4 digit zip code</mat-error>
-                        }
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="form-field">
-                        <mat-label>City</mat-label>
-                        <input matInput required name="city" pattern="[^0-9]*" [(ngModel)]="customer.city" [disabled]="isLoading"
-                            #city="ngModel">
-                        @if (city.errors?.['required']) {
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Last name</mat-label>
+                            <input matInput required name="lastName" [(ngModel)]="customer.lastName" [disabled]="isLoading">
                             <mat-error>You must enter a value</mat-error>
-                        }
-                        @if (city.errors?.['pattern']) {
-                            <mat-error>Value can contain only characters</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <mat-dialog-actions align="end">
-                    <button mat-raised-button
-                        mat-dialog-close [disabled]="isLoading">Cancel</button>
-                    <button mat-raised-button color="primary"
-                        [disabled]="!form.valid || isLoading"
-                        cdkFocusRegionstart type="submit">Add</button>
-                </mat-dialog-actions>
-            </form>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Email</mat-label>
+                            <input matInput required name="email" [(ngModel)]="customer.email" pattern="[^@]+@[^\.]+\..+"
+                                #email="ngModel" [disabled]="isLoading">
+                            @if (email.errors?.['required']) {
+                            <mat-error>You must enter a value</mat-error>
+                            }
+                            @if (email.errors?.['pattern']) {
+                            <mat-error>You must enter a valid email</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Date of birth</mat-label>
+                            <input matInput name="date" [(ngModel)]="date" [matDatepicker]="datepicker"
+                                [disabled]="isLoading">
+                            <mat-error>You must enter a valid date</mat-error>
+                            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Street & house number</mat-label>
+                            <input matInput required name="address" [(ngModel)]="customer.address" [disabled]="isLoading">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>Zip code</mat-label>
+                            <input type="text" matInput required name="zip" [(ngModel)]="customer.zip"
+                                [disabled]="isLoading" pattern="\d{4}" #zip="ngModel">
+                            @if (zip.errors?.['required']) {
+                                <mat-error>You must enter a value</mat-error>
+                            }
+                            @if (zip.errors?.['pattern']) {
+                                <mat-error>You must enter a 4 digit zip code</mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="form-field">
+                            <mat-label>City</mat-label>
+                            <input matInput required name="city" pattern="[^0-9]*" [(ngModel)]="customer.city" [disabled]="isLoading"
+                                #city="ngModel">
+                            @if (city.errors?.['required']) {
+                                <mat-error>You must enter a value</mat-error>
+                            }
+                            @if (city.errors?.['pattern']) {
+                                <mat-error>Value can contain only characters</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <mat-dialog-actions align="end">
+                        <button mat-raised-button
+                            mat-dialog-close [disabled]="isLoading">Cancel</button>
+                        <button mat-raised-button color="primary"
+                            [disabled]="!form.valid || isLoading"
+                            cdkFocusRegionstart type="submit">Add</button>
+                    </mat-dialog-actions>
+                </form>
+            </div>
         </div>
     </mat-dialog-content>
     @if (showSuccess) {
