@@ -10,6 +10,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FirestoreService } from '../../services/firestore/firestore.service';
 import { Unsubscribe } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'
+import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 
 
 @Component({
@@ -22,7 +24,8 @@ import { Subscription } from 'rxjs';
     MatIconModule,
     CommonModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
@@ -31,6 +34,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   products!: Product[];
 
   firestoreService = inject(FirestoreService);
+  dialog = inject(MatDialog);
+
   unsubProducts!: Unsubscribe;
   productsSubscription!: Subscription;
 
@@ -59,5 +64,9 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   refreshTable() {
     this.dataSource.data = this.products;
     this.dataSource.paginator = this.paginator
+  }
+
+  openDialog() {
+    this.dialog.open(ProductDialogComponent);
   }
 }

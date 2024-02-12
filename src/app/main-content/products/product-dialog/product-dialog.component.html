@@ -1,0 +1,81 @@
+<div class="dialog-container">
+    <ng-container [ngSwitch]="addingStatus">
+        <mat-progress-bar *ngSwitchCase="'adding'" mode="indeterminate"></mat-progress-bar>
+        <app-message-animation *ngSwitchCase="'success'" class="success">Product added successfully</app-message-animation>
+        <app-message-animation *ngSwitchCase="'fail'" class="error">Failed to add product</app-message-animation>
+    </ng-container>
+
+    <h2 mat-dialog-title>Add new product</h2>
+
+    <mat-dialog-content>
+        <div class="dialog-subcontainer">
+            <div class="upload-image-container">
+                <img class="product-image" [src]="product.imageUrl || './assets/images/product-img.jpg'" alt="Product image">
+                <input type="file" (change)="onImageSelected($event)" hidden #fileInput accept=".jpg,.jpeg,.png">
+                <button (click)="fileInput.click()" class="upload" mat-mini-fab color="accent" 
+                    aria-label="Example icon button with a menu icon"
+                    matTooltip="Upload image">
+                    <mat-icon>upload</mat-icon>
+                </button>
+            </div>
+            <div class="img-loading-container" [ngSwitch]="imageStatus">
+                <div *ngSwitchCase="'uploading'" class="img-spinner-container">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <app-message-animation *ngSwitchCase="'fail'" class="error">Failed to upload image</app-message-animation>
+            </div>
+
+            <div class="form-container">
+                <form (submit)="saveProduct()" #form="ngForm">
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Product name</mat-label>
+                            <input matInput required name="name" [(ngModel)]="formProduct.name"
+                            [disabled]="addingStatus == 'adding'">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field>
+                            <mat-label>Status</mat-label>
+                            <mat-select required [formControl]="statusControl">
+                              @for (state of productStates; track state) {
+                                <mat-option [value]="state">{{state}}</mat-option>
+                              }
+                            </mat-select>
+                            @if (statusControl.errors?.['required']) {
+                                <mat-error>You must select a status</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Inventory</mat-label>
+                            <input matInput type="number"
+                                required name="inventory" [(ngModel)]="formProduct.inventory"
+                                [disabled]="addingStatus == 'adding'">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Price in CHF</mat-label>
+                            <input matInput type="number"
+                                required name="price" [(ngModel)]="formProduct.price"
+                                [disabled]="addingStatus == 'adding'">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-dialog-actions align="end" class="form-field">
+                        <button mat-raised-button
+                            mat-dialog-close [disabled]="addingStatus == 'adding'">Cancel</button>
+                        <button mat-raised-button color="primary"
+                        [disabled]="!form.valid || addingStatus == 'adding'"
+                        cdkfocusRegionStart type="submit">Add</button>
+                    </mat-dialog-actions>
+                </form>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+</div>
