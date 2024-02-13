@@ -53,11 +53,11 @@ export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.unsubCustomers = this.firestore.snapshotCustomers();
-    // this.unsubCollection = this.firestore.customers$.subscribe(customerArr => {
-    //   this.customers = customerArr;
-    //   this.refreshTable();
-    // })
+    this.unsubCustomers = this.firestore.snapshotCustomers();
+    this.unsubCollection = this.firestore.customers$.subscribe(customerArr => {
+      this.customers = customerArr;
+      this.refreshTable();
+    })
   }
 
   refreshTable() {

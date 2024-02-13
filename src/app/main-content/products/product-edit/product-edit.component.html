@@ -1,0 +1,97 @@
+@if (isLoading) {
+    <div class="loader-wrapper">
+        <mat-spinner></mat-spinner>
+    </div>
+} @else {
+    <div class="heading-container">
+        <h2>Edit product details</h2>
+        <button routerLink="/products" mat-icon-button color="primary" 
+            aria-label="Button with a arrow icon"
+            matTooltip="Go back">
+            <mat-icon>west</mat-icon>
+        </button>
+    </div>
+    <mat-card>
+        <mat-card-content>
+            <div class="upload-image-container">
+                <img class="product-image" [src]="product.imageUrl || './assets/images/product-img.jpg'" alt="Product image">
+                <input type="file" (change)="uploadImage($event)" hidden #fileInput accept=".jpg,.jpeg,.png">
+                <button (click)="fileInput.click()" class="upload" mat-mini-fab color="accent" 
+                    aria-label="Example icon button with a menu icon"
+                    matTooltip="Upload image">
+                    <mat-icon>upload</mat-icon>
+                </button>
+            </div>
+            <div class="img-loading-container" [ngSwitch]="imageStatus">
+                <div *ngSwitchCase="'uploading'" class="img-spinner-container">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <app-message-animation *ngSwitchCase="'fail'" class="error">Failed to upload image</app-message-animation>
+            </div>
+        
+            <div class="form-container">
+                <form (submit)="updateProduct()" #form="ngForm">
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Product name</mat-label>
+                            <input matInput required name="name" [(ngModel)]="product.name"
+                            [disabled]="savingStatus == 'saving'">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field>
+                            <mat-label>Status</mat-label>
+                            <mat-select required [formControl]="statusControl">
+                              @for (state of productStates; track state) {
+                                <mat-option [value]="state">{{state}}</mat-option>
+                              }
+                            </mat-select>
+                            @if (statusControl.errors?.['required']) {
+                                <mat-error>You must select a status</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Inventory</mat-label>
+                            <input matInput type="number"
+                                required name="inventory" [(ngModel)]="product.inventory"
+                                [disabled]="savingStatus == 'saving'">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-container">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Price in CHF</mat-label>
+                            <input matInput type="number"
+                                required name="price" [(ngModel)]="product.price"
+                                [disabled]="savingStatus == 'saving'">
+                            <mat-error>You must enter a value</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="button-container">
+                        <button mat-raised-button routerLink="/products"
+                            [disabled]="savingStatus == 'saving'">Cancel</button>
+                        <button mat-raised-button color="primary"
+                            [disabled]="!form.valid || savingStatus == 'saving'"
+                            cdkfocusRegionStart type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+            <ng-container [ngSwitch]="imageStatus">
+                <div *ngSwitchCase="'uploading'" class="loader-wrapper">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <app-message-animation *ngSwitchCase="'fail'" class="error">Failed to upload image</app-message-animation>
+            </ng-container>
+            <ng-container [ngSwitch]="savingStatus">
+                <div *ngSwitchCase="'saving'" class="loader-wrapper">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <app-message-animation *ngSwitchCase="'fail'" class="error">Failed to upload image</app-message-animation>
+                <app-message-animation *ngSwitchCase="'success'" class="success">Product updated successfully</app-message-animation>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+}

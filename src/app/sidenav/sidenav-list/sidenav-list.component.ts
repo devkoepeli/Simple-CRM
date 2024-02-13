@@ -21,7 +21,7 @@ export class SidenavListComponent implements OnInit {
           this.currentRoute = 'dashboard';
         } else if (/^\/customers(\/edit\/.+)?$/.test(event.url)) {
           this.currentRoute = 'customers';
-        } else if (event.url == '/products') {
+        } else if (/^\/products(\/edit\/.+)?$/.test(event.url)) {
           this.currentRoute = 'products';
         } else if (event.url == '/orders') {
           this.currentRoute = 'orders';

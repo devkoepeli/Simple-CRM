@@ -12,6 +12,7 @@ import { Unsubscribe } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   firestoreService = inject(FirestoreService);
   dialog = inject(MatDialog);
+  router = inject(Router);
 
   unsubProducts!: Unsubscribe;
   productsSubscription!: Subscription;
@@ -68,5 +70,9 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openDialog() {
     this.dialog.open(ProductDialogComponent);
+  }
+
+  editProduct(element: Product) {
+    this.router.navigate(['/products/edit/' + element.id]);
   }
 }

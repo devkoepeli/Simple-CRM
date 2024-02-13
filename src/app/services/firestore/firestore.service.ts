@@ -18,6 +18,7 @@ export class FirestoreService {
   products$ = this.productsSubject.asObservable();
 
   customerSubject = new Subject<Customer>();
+  productSubject = new Subject<Product>();
 
   constructor() { }
 
@@ -68,10 +69,25 @@ export class FirestoreService {
     })
   }
 
+  snapshotProduct(docId: string) {
+    return onSnapshot(this.getDocRef('products', docId), product => {
+      if (product.exists()) {
+        this.productSubject.next(this.setProductObject(product.data(), product.id));
+      }
+    })
+  }
+
   async updateDocument(colId: string, item: Customer) {
     if (item.id != undefined) {
       const docRef = this.getDocRef(colId, item.id);
       await updateDoc(docRef, this.getCleanCustomerObject(item));
+    }
+  }
+
+  async updateProduct(colId: 'products', item: Product) {
+    if (item.id != undefined) {
+      const docRef = this.getDocRef(colId, item.id);
+      await updateDoc(docRef, this.getCleanProductObject(item));
     }
   }
 
@@ -118,6 +134,17 @@ export class FirestoreService {
       imageUrl: product.imageUrl,
       timeStamp: product.timeStamp,
       id: productId
+    }
+  }
+
+  getCleanProductObject(item: Product) {
+    return {
+      name: item.name,
+      status: item.status,
+      inventory: item.inventory,
+      price: item.price,
+      imageUrl: item.imageUrl,
+      timeStamp: item.timeStamp
     }
   }
 }

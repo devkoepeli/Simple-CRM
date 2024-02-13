@@ -36,7 +36,7 @@
                 <ng-container matColumnDef="edit">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                        <button 
+                        <button (click)="editProduct(element)"
                             mat-icon-button color="primary" aria-label="Button with a edit icon"
                             matTooltip="Edit product"
                             matTooltipPosition="above">
