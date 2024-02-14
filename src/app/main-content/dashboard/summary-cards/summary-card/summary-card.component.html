@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-content>
+        <div class="header">
+            <h3>{{ item.title }}</h3>
+            <div class="icon-container">
+                <mat-icon color="primary">{{ item.icon }}</mat-icon>
+            </div>
+        </div>
+        <p>{{ item.title == 'revenue' ? 'CHF ' + item.amount.toFixed(2) : item.amount }}</p>
+        <a [routerLink]="item.route">{{ item.link }}</a>
+    </mat-card-content>
+</mat-card>

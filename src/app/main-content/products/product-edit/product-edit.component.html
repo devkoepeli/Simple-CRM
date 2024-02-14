@@ -71,7 +71,7 @@
                         </mat-form-field>
                     </div>
                     <div class="button-container">
-                        <button mat-raised-button routerLink="/products"
+                        <button mat-raised-button routerLink="/products" type="button"
                             [disabled]="savingStatus == 'saving'">Cancel</button>
                         <button mat-raised-button color="primary"
                             [disabled]="!form.valid || savingStatus == 'saving'"

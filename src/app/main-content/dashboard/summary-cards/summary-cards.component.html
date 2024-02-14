@@ -1,0 +1,11 @@
+@if (isLoading || !customersAmount && !inventoryAmount) {
+    <div class="spinner-container">
+        <mat-spinner></mat-spinner>
+    </div>
+} @else {
+    <div class="summary-container">
+        @for (item of summaryItems; track item.title) {
+        <app-summary-card [item]="item"></app-summary-card>
+        }
+    </div>
+}
