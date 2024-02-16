@@ -48,14 +48,27 @@ export class SummaryCardsComponent implements OnInit, OnDestroy {
     this.unsubCustomers = this.firestore.snapshotCustomers();
     this.customersSubscription = this.firestore.customers$.subscribe((customers: Customer[]) => {
       this.customersAmount = customers.length;
-      this.assignCustomersData();
+      this.assignData('customers');
     })
   }
 
-  assignCustomersData() {
+  getPropertyName(target: string) {
+    switch (target) {
+      case 'customers':
+        return this.customersAmount;
+      case 'inventory': 
+        return this.inventoryAmount;
+      default:
+        return 0;
+    }
+  }
+
+  assignData(target: string) {
+    const targetAmount = this.getPropertyName(target);
+
     for (const item of this.summaryItems) {
-      if (Object.values(item).includes('customers')) {
-        item.amount = this.customersAmount;
+      if (Object.values(item).includes(target)) {
+        item.amount = targetAmount;
       }
     }
   }
@@ -68,16 +81,8 @@ export class SummaryCardsComponent implements OnInit, OnDestroy {
         inventory += product.inventory;
       })
       this.inventoryAmount = inventory;
-      this.assignInventoryData();
+      this.assignData('inventory');
     })
-  }
-
-  assignInventoryData() {
-    for (const item of this.summaryItems) {
-      if (Object.values(item).includes('inventory')) {
-        item.amount = this.inventoryAmount;
-      }
-    }
   }
 
   ngOnDestroy(): void {
