@@ -7,6 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SummaryCardComponent } from './summary-card/summary-card.component';
 import { SummaryItem } from '../../../models/summary-item.interface';
 import { Product } from '../../../models/product.interface';
+import { OrdersService } from '../../../services/orders/orders.service';
 
 @Component({
   selector: 'app-summary-cards',
@@ -28,14 +29,23 @@ export class SummaryCardsComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
+  firestore = inject(FirestoreService);
+  ordersDataService = inject(OrdersService);
+
   summaryItems: SummaryItem[] = [
       { title: 'customers', amount: this.customersAmount, icon: 'person', route: '/customers', link: 'View all customers' },
-      { title: 'orders', amount: 25, icon: 'shopping_cart', route: '/orders', link: 'View all orders' },
-      { title: 'revenue', amount: 2089.80, icon: 'attach_money', route: '/orders', link: 'See details' },
+      { title: 'orders', amount: this.ordersDataService.orders.length, icon: 'shopping_cart', route: '/orders', link: 'View all orders' },
+      { title: 'revenue', amount: this.getRevenue(), icon: 'attach_money', route: '/orders', link: 'See details' },
       { title: 'inventory', amount: this.inventoryAmount, icon: 'inventory_2', route: '/products', link: 'See details' },
-    ];
+  ];
 
-  firestore = inject(FirestoreService);
+  getRevenue(): number {
+    let revenue = 0;
+    this.ordersDataService.orders.forEach(order => {
+      revenue += order.revenue;
+    })
+    return revenue;
+  }
 
   ngOnInit() {
     this.isLoading = true;
@@ -52,7 +62,7 @@ export class SummaryCardsComponent implements OnInit, OnDestroy {
     })
   }
 
-  getPropertyName(target: string) {
+  getPropertyName(target: string): number {
     switch (target) {
       case 'customers':
         return this.customersAmount;

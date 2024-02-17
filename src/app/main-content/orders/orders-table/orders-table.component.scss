@@ -1,0 +1,15 @@
+tr[mat-row] {
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(63, 81, 181, 0.04);
+    }
+}
+
+.status {
+    color: green;
+    background-color: rgba(0, 128, 0, 0.16);
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+}

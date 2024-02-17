@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Details order #{{ data.id }}</h2>
+<mat-dialog-content>
+    <table mat-table [dataSource]="data.products">
+
+        <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef> Product </th>
+            <td mat-cell *matCellDef="let data"> {{data.amount}} x {{data.name}} </td>
+            <td mat-footer-cell *matFooterCellDef class="fw-500"> Total </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef class="p-r"> Price </th>
+            <td mat-cell *matCellDef="let data" class="p-r">CHF {{data.price.toFixed(2)}} </td>
+            <td mat-footer-cell *matFooterCellDef class="p-r"></td>
+        </ng-container>
+
+        <ng-container matColumnDef="revenue">
+            <th mat-header-cell *matHeaderCellDef> Revenue </th>
+            <td mat-cell *matCellDef="let data">CHF {{(data.amount * data.price).toFixed(2)}} </td>
+            <td mat-footer-cell *matFooterCellDef class="fw-500">CHF {{getTotalCost().toFixed(2)}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+</mat-dialog-content>
