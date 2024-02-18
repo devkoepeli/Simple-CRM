@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Details order #{{ data.id }}</h2>
+<div class="header-container">
+    <h2 mat-dialog-title>Details order #{{ data.id }}</h2>
+    <button (click)="closeDialog()" mat-icon-button aria-label="button with close icon">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
 <mat-dialog-content>
     <table mat-table [dataSource]="data.products">
 

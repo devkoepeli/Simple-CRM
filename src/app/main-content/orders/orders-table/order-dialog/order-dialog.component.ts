@@ -1,7 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { Component, inject, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle, MatDialogRef } from '@angular/material/dialog';
 import { Order } from '../../../../models/order.interface';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -10,13 +12,16 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     MatDialogContent,
     MatDialogTitle,
-    MatTableModule
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './order-dialog.component.html',
   styleUrl: './order-dialog.component.scss'
 })
 export class OrderDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: Order) { }
+  dialogRef = inject(MatDialogRef<OrderDialogComponent>);
 
   displayedColumns: string[] = ['product', 'price', 'revenue'];
 
@@ -30,5 +35,9 @@ export class OrderDialogComponent {
       revenue += price * amount;
     });
     return revenue;
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

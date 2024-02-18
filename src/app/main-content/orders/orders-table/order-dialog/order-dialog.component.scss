@@ -1,5 +1,12 @@
+@import '../../../../shared/styles/mixins.scss';
+
 table {
     width: 550px;
+}
+
+.header-container {
+    @include flexbox($jc: space-between);
+    padding-right: 24px;
 }
 
 .fw-500 {
