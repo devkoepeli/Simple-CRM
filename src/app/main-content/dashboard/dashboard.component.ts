@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OrdersTableComponent } from '../orders/orders-table/orders-table.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { SummaryCardsComponent } from './summary-cards/summary-cards.component';
@@ -9,7 +10,8 @@ import { SummaryCardsComponent } from './summary-cards/summary-cards.component';
   imports: [
     SummaryCardsComponent,
     LineChartComponent,
-    PieChartComponent
+    PieChartComponent,
+    OrdersTableComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
