@@ -7,6 +7,17 @@ import { Order } from '../../models/order.interface';
 export class OrdersService {
   orders: Order[] = [
     {
+      id: 25,
+      date: new Date("2024-02-16T01:00:00"),
+      customer: 'Nicole Zimmermann',
+      products: [
+        { name: 'Nova Smartwatch', price: 295.95, amount: 1 },
+      ],
+      productsAmount: 1,
+      revenue: 295.95,
+      status: 'approved'
+    },
+    {
       id: 24,
       date: new Date("2024-02-08T01:00:00"),
       customer: 'Michael Lüscher',
@@ -258,7 +269,7 @@ export class OrdersService {
     },
     {
       id: 2,
-      date: new Date("2023-12-28T01:00:00"),
+      date: new Date("2023-12-09T01:00:00"),
       customer: 'Simon Müller',
       products: [
         { name: 'Nova Smartwatch', price: 295.95, amount: 2 },
@@ -270,7 +281,7 @@ export class OrdersService {
     },
     {
       id: 1,
-      date: new Date("2023-12-26T01:00:00"),
+      date: new Date("2023-12-03T01:00:00"),
       customer: 'David Hofmann',
       products: [
         { name: 'Solar Powerbank', price: 45.95, amount: 2 }

@@ -1,5 +1,21 @@
+@import '../../shared/styles/mixins.scss';
+
 h2 {
     font-size: 32px;
     margin: 0;
     padding-bottom: 32px;
+}
+
+.charts-container {
+    padding-top: 32px;
+    @include flexbox($jc: space-between, $ai: stretch, $gap: 32px);
+
+    app-line-chart {
+        width: 65%;
+        height: 100%;
+    }
+
+    app-pie-chart {
+        width: 35%;
+    }
 }
