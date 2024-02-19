@@ -91,7 +91,7 @@ export class OrdersService {
       date: new Date("2024-01-27T01:00:00"),
       customer: 'Lisa Lüscher',
       products: [
-        { name: 'Solar Powerbank', price: 49.95, amount: 3 },
+        { name: 'Solar Power Bank', price: 49.95, amount: 3 },
       ],
       productsAmount: 3,
       revenue: 149.85,
@@ -148,7 +148,7 @@ export class OrdersService {
       date: new Date("2024-01-17T01:00:00"),
       customer: 'Laura Graf',
       products: [
-        { name: 'Solar Powerbank', price: 49.95, amount: 1 },
+        { name: 'Solar Power Bank', price: 49.95, amount: 1 },
       ],
       productsAmount: 1,
       revenue: 49.95,
@@ -284,7 +284,7 @@ export class OrdersService {
       date: new Date("2023-12-03T01:00:00"),
       customer: 'David Hofmann',
       products: [
-        { name: 'Solar Powerbank', price: 45.95, amount: 2 }
+        { name: 'Solar Power Bank', price: 45.95, amount: 2 }
       ],
       productsAmount: 2,
       revenue: 91.90,
