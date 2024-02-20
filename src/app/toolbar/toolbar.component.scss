@@ -1,6 +1,62 @@
+@import '../shared/styles/mixins.scss';
+@import '../shared/styles/variables.scss';
+
 .toolbar {
-    position: fixed;
+    position: sticky;
     top: 0;
     z-index: 2;
     height: 60px;
+}
+
+.toolbar-container {
+    @include flexbox($jc: space-between);
+    width: 100%;
+
+    div {
+        @include flexbox();
+    }
+}
+
+span {
+    padding-left: 14px;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+}
+
+img {
+    width: 40px;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+
+    &:hover {
+        border: 1.5px solid rgba(255, 255, 255, 0.8);
+    }
+}
+
+.logout {
+    position: absolute;
+    top: 60px;
+    right: 16px;
+    box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+    border-radius: 4px;
+    background: white;
+    
+    a {
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 16px;
+        padding: 10px 48px 10px 20px;
+        cursor: pointer;
+        font-weight: 400;
+        @include flexbox($gap: 8px);
+
+        &:hover {
+            background-color: rgba(63, 81, 181, 0.1);
+        }
+
+        mat-icon {
+            color: $main-color;
+        }
+    }
 }

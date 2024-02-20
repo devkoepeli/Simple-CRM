@@ -13,10 +13,15 @@ import { SidenavService } from '../services/sidenav/sidenav.service';
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
+  isOptionsOpen = false;
 
   constructor(private sidenavService: SidenavService) {}
 
   toggleSidenav() {
     this.sidenavService.toggleSidenav();
+  }
+
+  showOptions() {
+    this.isOptionsOpen = !this.isOptionsOpen;
   }
 }
