@@ -1,11 +1,14 @@
 <section>
     <h2>Dashboard</h2>
-    <app-summary-cards></app-summary-cards>
-    <div class="charts-container">
-        <app-line-chart></app-line-chart>
-        <app-pie-chart></app-pie-chart>
-    </div>
-    <app-orders-table>
-        <h3 class="orders-heading">Orders</h3>
-    </app-orders-table>
+    <app-summary-cards (amountsEvent)="setAmounts($any($event))"></app-summary-cards>
+
+    @if (customersAmount && inventoryAmount) {
+        <div class="charts-container">
+            <app-line-chart></app-line-chart>
+            <app-pie-chart></app-pie-chart>
+        </div>
+        <app-orders-table>
+            <h3 class="orders-heading">Orders</h3>
+        </app-orders-table>
+    }
 </section>

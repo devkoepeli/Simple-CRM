@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
@@ -20,24 +20,46 @@ import { OrdersService } from '../../../services/orders/orders.service';
   styleUrl: './summary-cards.component.scss'
 })
 export class SummaryCardsComponent implements OnInit, OnDestroy {
-  customersAmount!: number;
-  inventoryAmount!: number;
+  private _customersAmount!: number;
+  private _inventoryAmount!: number;
+  @Output() amountsEvent = new EventEmitter<{ customersAmount: number, inventoryAmount: number }>();
+
   unsubCustomers!: Unsubscribe;
   customersSubscription!: Subscription;
   unsubProducts!: Unsubscribe;
   productsSubscription!: Subscription;
 
-  isLoading = false;
-
   firestore = inject(FirestoreService);
   ordersDataService = inject(OrdersService);
 
   summaryItems: SummaryItem[] = [
-      { title: 'customers', amount: this.customersAmount, icon: 'person', route: '/customers', link: 'View all customers' },
-      { title: 'orders', amount: this.ordersDataService.orders.length, icon: 'shopping_cart', route: '/orders', link: 'View all orders' },
-      { title: 'revenue', amount: this.getRevenue(), icon: 'attach_money', route: '/orders', link: 'See details' },
-      { title: 'inventory', amount: this.inventoryAmount, icon: 'inventory_2', route: '/products', link: 'See details' },
+    { title: 'customers', amount: this.customersAmount, icon: 'person', route: '/customers', link: 'View all customers' },
+    { title: 'orders', amount: this.ordersDataService.orders.length, icon: 'shopping_cart', route: '/orders', link: 'View all orders' },
+    { title: 'revenue', amount: this.getRevenue(), icon: 'attach_money', route: '/orders', link: 'See details' },
+    { title: 'inventory', amount: this.inventoryAmount, icon: 'inventory_2', route: '/products', link: 'See details' },
   ];
+
+  get customersAmount(): number {
+    return this._customersAmount;
+  }
+
+  set customersAmount(value: number) {
+    this._customersAmount = value;
+    this.onAmountChange();
+  }
+
+  get inventoryAmount(): number {
+    return this._inventoryAmount;
+  }
+  
+  set inventoryAmount(value: number) {
+    this._inventoryAmount = value;
+    this.onAmountChange();
+  }
+
+  private onAmountChange(): void {
+    this.amountsEvent.emit({ customersAmount: this.customersAmount, inventoryAmount: this.inventoryAmount });
+  }
 
   getRevenue(): number {
     let revenue = 0;
@@ -48,10 +70,8 @@ export class SummaryCardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.loadCustomersData();
     this.loadInventoryData();
-    this.isLoading = false;
   }
 
   loadCustomersData() {
@@ -66,7 +86,7 @@ export class SummaryCardsComponent implements OnInit, OnDestroy {
     switch (target) {
       case 'customers':
         return this.customersAmount;
-      case 'inventory': 
+      case 'inventory':
         return this.inventoryAmount;
       default:
         return 0;
