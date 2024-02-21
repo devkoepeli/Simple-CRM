@@ -10,6 +10,7 @@ import { ProductEditComponent } from './main-content/products/product-edit/produ
 import { ProductsComponent } from './main-content/products/products.component';
 import { SignupComponent } from './front-page/signup/signup.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
     { 
@@ -29,7 +30,8 @@ export const routes: Routes = [
         component: FrontPageComponent,
         children: [
             { path: 'login', component: LoginComponent },
-            { path: 'signup', component: SignupComponent }
+            { path: 'signup', component: SignupComponent },
         ]
-    }  
+    },
+    { path: 'privacy-policy', component: PrivacyPolicyComponent }
 ];

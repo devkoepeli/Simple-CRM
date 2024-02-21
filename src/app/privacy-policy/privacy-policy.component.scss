@@ -1,0 +1,34 @@
+@import '../shared/styles/mixins.scss';
+
+.container {
+    max-width: 1920px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 64px;
+
+    .header-container {
+        @include flexbox($jc: space-between);
+    }
+
+    .heading {
+        font-size: 32px;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    h3 {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    img {
+        width: 250px;
+        height: 50px;
+        object-fit: cover;
+    }
+}
