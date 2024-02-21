@@ -1,0 +1,49 @@
+<div class="form-container">
+    <h2>Login</h2>
+    <div>
+        <form (submit)="login()" #loginForm="ngForm">
+            <div class="input-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput name="email"
+                        placeholder="Email" required
+                        [(ngModel)]="email"
+                        #em="ngModel"
+                        pattern="[^@]+@[^\.]+\..+">
+                    @if (em.errors?.['required']) {
+                        <mat-error>You must enter an email</mat-error>
+                    }
+                    @if (em.errors?.['pattern']) {
+                        <mat-error>You must enter a valid email</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="input-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput name="password"
+                        [type]="hide ? 'password' : 'text'" required
+                        [(ngModel)]="password" placeholder="Password"
+                        #pw="ngModel"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    @if (pw.errors?.['required']) {
+                        <mat-error>You must enter a password</mat-error>
+                    }
+                    @if (pw.errors?.['pattern']) {
+                        <mat-error>Password must contain at least one number, one uppercase and lowercase letter,
+                            and at least 8 or more characters</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="button-container">
+                <button mat-raised-button color="primary"
+                    type="submit" [disabled]="loginForm.invalid">Login</button>
+            </div>
+            <p class="signup-cta">Not a user? <a routerLink="/signup">Sign up</a></p>
+        </form>
+    </div>
+</div>

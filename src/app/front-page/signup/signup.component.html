@@ -1,0 +1,55 @@
+<div class="form-container">
+    <h2>Sign up</h2>
+    <div>
+        <form (submit)="signup()" #signupForm="ngForm">
+            <div class="input-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput name="email"
+                        placeholder="Email" required
+                        [(ngModel)]="email"
+                        #em="ngModel"
+                        pattern="[^@]+@[^\.]+\..+">
+                    @if (em.errors?.['required']) {
+                        <mat-error>You must enter an email</mat-error>
+                    }
+                    @if (em.errors?.['pattern']) {
+                        <mat-error>You must enter a valid email</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="input-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput name="password"
+                        [type]="hide ? 'password' : 'text'" required
+                        [(ngModel)]="password" placeholder="Password"
+                        #pw="ngModel"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    @if (pw.errors?.['required']) {
+                        <mat-error>You must enter a password</mat-error>
+                    }
+                    @if (pw.errors?.['pattern']) {
+                        <mat-error>Password must contain at least one number, one uppercase and lowercase letter,
+                            and at least 8 or more characters</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="button-container">
+                <button mat-raised-button color="primary"
+                    type="submit" [disabled]="signupForm.invalid">Create account</button>
+            </div>
+        </form>
+    </div>
+    <p class="policy-info">By creating an account you confirm that you have read our 
+        <a routerLink="/privacy-policy">privacy policy</a> and agree to its terms.
+    </p>
+</div>
+<svg class="arrow-icon" matTooltip="Go back" routerLink="/login"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+</svg>
