@@ -3,11 +3,12 @@ import { MatIconButton } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SidenavService } from '../services/sidenav/sidenav.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MatToolbarModule, MatIconButton, MatIconModule],
+  imports: [MatToolbarModule, MatIconButton, MatIconModule, RouterLink],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })

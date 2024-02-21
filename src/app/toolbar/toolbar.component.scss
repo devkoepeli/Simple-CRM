@@ -50,6 +50,7 @@ img {
         cursor: pointer;
         font-weight: 400;
         @include flexbox($gap: 8px);
+        text-decoration: none;
 
         &:hover {
             background-color: rgba(63, 81, 181, 0.1);
