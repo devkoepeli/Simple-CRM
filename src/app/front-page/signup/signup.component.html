@@ -4,6 +4,23 @@
         <form (submit)="signup()" #signupForm="ngForm">
             <div class="input-container">
                 <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput name="name"
+                        placeholder="Name" required
+                        [(ngModel)]="userName"
+                        #name="ngModel"
+                        [disabled]="isSigningUp"
+                        pattern="^[A-Za-zÀ-ÖØ-öø-ÿ ]*$">
+                    @if (name.errors?.['required']) {
+                        <mat-error>You must enter a name</mat-error>
+                    }
+                    @if (name.errors?.['pattern']) {
+                        <mat-error>You cannot enter numbers or special characters</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="input-container">
+                <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput name="email"
                         placeholder="Email" required

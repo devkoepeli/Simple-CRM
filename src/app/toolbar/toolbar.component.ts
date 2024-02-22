@@ -1,10 +1,10 @@
-import { Component, HostListener, inject, NgZone } from '@angular/core';
+import { Component, HostListener, inject, NgZone, OnInit } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SidenavService } from '../services/sidenav/sidenav.service';
 import { Router, RouterLink } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
+import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,14 +13,19 @@ import { Auth } from '@angular/fire/auth';
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnInit {
   isOptionsOpen = false;
+  userName: string | null = '';
 
   sidenavService = inject(SidenavService);
   router = inject(Router);
   auth = inject(Auth);
 
   constructor() { }
+
+  ngOnInit() {
+    this.getUserName();
+  }
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent): void {
@@ -38,8 +43,17 @@ export class ToolbarComponent {
     this.isOptionsOpen = !this.isOptionsOpen;
   }
 
+  getUserName() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      this.userName = user.displayName;
+    }
+  }
+
   logout() {
-      this.auth.signOut()
+    this.auth.signOut()
       .then(() => {
         this.router.navigate(['login']);
       })

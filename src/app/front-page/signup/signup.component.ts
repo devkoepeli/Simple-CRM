@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Auth } from '@angular/fire/auth';
+import { Auth, updateProfile } from '@angular/fire/auth';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MessageAnimationComponent } from '../../shared/components/message-animation/message-animation.component';
@@ -33,6 +33,7 @@ export class SignupComponent {
   hide = true;
   password = '';
   email = '';
+  userName = '';
   isSigningUp = false;
   signUpResult: 'emailExists' | 'error' | 'success' | 'initial' = 'initial'
 
@@ -46,7 +47,8 @@ export class SignupComponent {
     this.isSigningUp = true;
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => {
+      .then((userCredential) => {
+        updateProfile(userCredential.user, { displayName: this.userName });
         this.signupSuccess();
       })
       .catch(e => {

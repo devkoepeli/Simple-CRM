@@ -43,7 +43,6 @@ export class LoginComponent {
 
     signInWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
-        console.log(userCredential.user);
         this.loggingSuccess();
       })
       .catch(e => {

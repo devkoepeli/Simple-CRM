@@ -6,7 +6,10 @@
             </button>
             <span>E-Commerce Dashboard</span>
         </div>
-        <img (click)="showOptions()" id="logout" src="../../assets/images/profile-img.png" alt="User image">
+        <div>
+            <span class="user-name">{{ userName }}</span>
+            <img (click)="showOptions()" id="logout" src="../../assets/images/profile-img.png" alt="User image">
+        </div>
         @if (isOptionsOpen) {
         <div class="logout">
             <a (click)="logout()"><mat-icon>logout</mat-icon>Logout</a>
