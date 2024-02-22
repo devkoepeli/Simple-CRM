@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { ContentComponent } from './content/content.component';
 import { LoginComponent } from './front-page/login/login.component';
 import { CustomerEditComponent } from './main-content/customer-edit/customer-edit.component';

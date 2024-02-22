@@ -11,10 +11,11 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
   styleUrl: './sidenav-list.component.scss'
 })
 export class SidenavListComponent implements OnInit {
-  currentRoute: 'dashboard' | 'customers' | 'products' | 'orders' | 'login' = 'dashboard';
 
   router = inject(Router);
   auth = inject(Auth);
+
+  currentRoute: string = this.router.url;
 
   constructor() {}
 
@@ -22,13 +23,13 @@ export class SidenavListComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url == '/') {
-          this.currentRoute = 'dashboard';
+          this.currentRoute = '/';
         } else if (/^\/customers(\/edit\/.+)?$/.test(event.url)) {
-          this.currentRoute = 'customers';
+          this.currentRoute = '/customers';
         } else if (/^\/products(\/edit\/.+)?$/.test(event.url)) {
-          this.currentRoute = 'products';
+          this.currentRoute = '/products';
         } else if (event.url == '/orders') {
-          this.currentRoute = 'orders';
+          this.currentRoute = '/orders';
         }
       }
     })
