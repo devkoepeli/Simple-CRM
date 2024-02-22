@@ -11,21 +11,24 @@ import { ProductsComponent } from './main-content/products/products.component';
 import { SignupComponent } from './front-page/signup/signup.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login'])
 
 export const routes: Routes = [
-    { 
-        path: '', 
-        component: ContentComponent, 
+    {
+        path: '',
+        component: ContentComponent,
         children: [
-            { path: '', component: DashboardComponent },
-            { path: 'customers', component: CustomerComponent },
-            { path: 'customers/edit/:id', component: CustomerEditComponent },
-            { path: 'products', component: ProductsComponent },
-            { path: 'products/edit/:id', component: ProductEditComponent },
-            { path: 'orders', component: OrdersComponent },
+            { path: '', component: DashboardComponent, canActivate: [AuthGuard],  data: {authGuardPipe: redirectUnauthorizedToLogin} },
+            { path: 'customers', component: CustomerComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} },
+            { path: 'customers/edit/:id', component: CustomerEditComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} },
+            { path: 'products', component: ProductsComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} },
+            { path: 'products/edit/:id', component: ProductEditComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} },
+            { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} },
         ]
     },
-    { 
+    {
         path: '',
         component: FrontPageComponent,
         children: [

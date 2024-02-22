@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 
@@ -12,7 +13,10 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 export class SidenavListComponent implements OnInit {
   currentRoute: 'dashboard' | 'customers' | 'products' | 'orders' | 'login' = 'dashboard';
 
-  constructor(private router: Router) {}
+  router = inject(Router);
+  auth = inject(Auth);
+
+  constructor() {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -30,4 +34,10 @@ export class SidenavListComponent implements OnInit {
     })
   }
 
+  logout() {
+    this.auth.signOut()
+    .then(() => {
+      this.router.navigate(['login']);
+    })
+  }
 }

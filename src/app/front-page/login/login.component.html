@@ -42,6 +42,23 @@
             <div class="button-container">
                 <button mat-raised-button color="primary"
                     type="submit" [disabled]="loginForm.invalid">Login</button>
+                @if (isLoggingIn) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                }
+                @switch (loggingResult) {
+                    @case ('invalidCredential') {
+                        <div class="invalid-login">Email or password is invalid</div>
+                    }
+                    @case ('invalidEmail') {
+                        <div class="invalid-login">You must enter a valid email</div>
+                    }
+                    @case ('error') {
+                        <div class="invalid-login">Failed to login</div>
+                    }
+                    @case ('success') {
+                        <app-message-animation class="success">Logged in successfully</app-message-animation>
+                    }
+                }
             </div>
             <p class="signup-cta">Not a user? <a routerLink="/signup">Sign up</a></p>
         </form>

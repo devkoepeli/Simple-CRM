@@ -9,6 +9,7 @@
                         placeholder="Email" required
                         [(ngModel)]="email"
                         #em="ngModel"
+                        [disabled]="isSigningUp"
                         pattern="[^@]+@[^\.]+\..+">
                     @if (em.errors?.['required']) {
                         <mat-error>You must enter an email</mat-error>
@@ -25,6 +26,7 @@
                         [type]="hide ? 'password' : 'text'" required
                         [(ngModel)]="password" placeholder="Password"
                         #pw="ngModel"
+                        [disabled]="isSigningUp"
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
@@ -41,13 +43,27 @@
             </div>
             <div class="button-container">
                 <button mat-raised-button color="primary"
-                    type="submit" [disabled]="signupForm.invalid">Create account</button>
+                    type="submit" [disabled]="signupForm.invalid || isSigningUp">Create account</button>
+                @if (isSigningUp) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                }
             </div>
         </form>
     </div>
     <p class="policy-info">By creating an account you confirm that you have read our 
         <a href="/privacy-policy" target="_blank">privacy policy</a> and agree to its terms.
     </p>
+    @switch (signUpResult) {
+        @case ('success') {
+            <app-message-animation class="success">Signed up successfully</app-message-animation>
+        }
+        @case ('emailExists') {
+            <app-message-animation class="error">Email already exists.<br>Please choose a new email</app-message-animation>
+        }
+        @case ('error') {
+            <app-message-animation class="error">Failed to sign up</app-message-animation>
+        }
+    }
 </div>
 <svg class="arrow-icon" matTooltip="Go back" routerLink="/login"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">

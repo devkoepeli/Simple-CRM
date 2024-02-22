@@ -3,7 +3,8 @@ import { MatIconButton } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SidenavService } from '../services/sidenav/sidenav.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,7 +16,11 @@ import { RouterLink } from '@angular/router';
 export class ToolbarComponent {
   isOptionsOpen = false;
 
-  constructor(private sidenavService: SidenavService) { }
+  sidenavService = inject(SidenavService);
+  router = inject(Router);
+  auth = inject(Auth);
+
+  constructor() { }
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent): void {
@@ -31,5 +36,12 @@ export class ToolbarComponent {
 
   showOptions() {
     this.isOptionsOpen = !this.isOptionsOpen;
+  }
+
+  logout() {
+      this.auth.signOut()
+      .then(() => {
+        this.router.navigate(['login']);
+      })
   }
 }

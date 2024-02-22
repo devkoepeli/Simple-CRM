@@ -9,7 +9,7 @@
         <img (click)="showOptions()" id="logout" src="../../assets/images/profile-img.png" alt="User image">
         @if (isOptionsOpen) {
         <div class="logout">
-            <a routerLink="/login"><mat-icon>logout</mat-icon>Logout</a>
+            <a (click)="logout()"><mat-icon>logout</mat-icon>Logout</a>
         </div>
         }
     </div>
