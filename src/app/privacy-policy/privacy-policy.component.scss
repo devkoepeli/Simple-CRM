@@ -6,6 +6,10 @@
     margin: 0 auto;
     padding: 64px;
 
+    @include mq(tablet) {
+        padding: 32px;
+    }
+
     .header-container {
         @include flexbox($jc: space-between);
     }
@@ -30,5 +34,13 @@
         width: 250px;
         height: 50px;
         object-fit: cover;
+
+        @include mq(xs) {
+            display: none;
+        }
     }
+}
+
+.link {
+    word-break: break-all;
 }
