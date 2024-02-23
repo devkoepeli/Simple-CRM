@@ -25,3 +25,13 @@ input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;;
 }
+
+.table-wrapper {
+  overflow-x: scroll;
+}
+
+.table-data {
+  @media (max-width: 1355px) {
+    min-width: 1009px !important;
+  }
+}

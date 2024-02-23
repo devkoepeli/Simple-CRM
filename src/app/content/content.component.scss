@@ -3,9 +3,18 @@
     min-height: 100%;
     height: auto;
     width: 100%;
+
+    @media(max-width: 1355px) {
+        display: block;
+    }
 }
 
 .main-content-container {
     width: 100%;
     background-color: rgba(63, 81, 181, 0.05);
+    min-height: 100vh;
+
+    @media(min-width: 991.98px) and (max-width: 1355px) {
+        padding-left: 250px;
+    }
 }

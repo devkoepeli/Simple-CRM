@@ -1,20 +1,30 @@
 <ul>
     <div class="group-title">MAIN</div>
     <li class="list-item">
-        <a [class.active]="currentRoute == '/'" routerLink="/"><mat-icon>dashboard</mat-icon>Dashboard</a>
+        <a [class.active]="currentRoute == '/'" routerLink="/"
+            (click)="closeSidenavMobile()">
+        <mat-icon>dashboard</mat-icon>Dashboard</a>
     </li>
     <div class="group-title">LISTS</div>
     <li class="list-item">
-        <a [class.active]="currentRoute == '/customers'" routerLink="/customers"><mat-icon>person</mat-icon>Customers</a>
+        <a [class.active]="currentRoute == '/customers'" routerLink="/customers"
+            (click)="closeSidenavMobile()">
+        <mat-icon>person</mat-icon>Customers</a>
     </li>
     <li class="list-item">
-        <a [class.active]="currentRoute == '/products'" routerLink="/products"><mat-icon>inventory_2</mat-icon>Products</a>
+        <a [class.active]="currentRoute == '/products'" routerLink="/products"
+            (click)="closeSidenavMobile()">
+        <mat-icon>inventory_2</mat-icon>Products</a>
     </li>
     <li class="list-item">
-        <a [class.active]="currentRoute == '/orders'" routerLink="/orders"><mat-icon>shopping_cart</mat-icon>Orders</a>
+        <a [class.active]="currentRoute == '/orders'" routerLink="/orders"
+            (click)="closeSidenavMobile()">
+        <mat-icon>shopping_cart</mat-icon>Orders</a>
     </li>
     <div class="group-title">USER</div>
     <li class="list-item">
-        <a [class.active]="currentRoute == '/login'" (click)="logout()"><mat-icon>logout</mat-icon>Logout</a>
+        <a [class.active]="currentRoute == '/login'" (click)="logout()"
+            (click)="closeSidenavMobile()">
+        <mat-icon>logout</mat-icon>Logout</a>
     </li>
 </ul>

@@ -12,8 +12,18 @@
 
 .summary-container {
     @include flexbox($gap: 32px);
+    flex-wrap: wrap;
 }
 
 app-summary-card {
     flex: 1;
+    
+    @media(max-width: 1261px) {
+        min-width: 335px;
+    }
+
+    @media(max-width: 395px) {
+        min-width: unset;
+        width: 100%;
+    }
 }

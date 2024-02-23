@@ -67,3 +67,15 @@ img {
     letter-spacing: 0.5px;
     font-weight: 400;
 }
+
+.toggle-sidenav-button {
+    @media (min-width: 991.98px) and (max-width: 1355px) {
+        display: none;
+    }
+}
+
+.title {
+    @include mq(xs) {
+        display: none;
+    }
+}

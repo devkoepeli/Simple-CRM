@@ -1,4 +1,10 @@
+@import '../../../shared/styles/mixins.scss';
+
 .dialog-container {
     position: relative;
     width: 496px;
+
+    @include mq(mobile) {
+        width: 80vw;
+    }
 }

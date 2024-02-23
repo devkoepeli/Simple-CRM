@@ -12,11 +12,19 @@
     padding-right: 64px;
     @include flexbox();
     position: relative;
+    @include mq(tablet) {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+    @include mq(mobile) {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 
     img {
         position: absolute;
         top: 0;
-        left: 0;
+        left: -30px;
         padding: inherit;
         box-sizing: content-box;
         width: 250px;

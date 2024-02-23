@@ -5,3 +5,23 @@
     align-items: $ai;
     gap: $gap;
 }
+
+@mixin mq($breakpoint) {
+    @if $breakpoint =='mobile' {
+        @media (max-width: 767.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =='tablet' {
+        @media (max-width: 991.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =='xs' {
+        @media (max-width: 575.98px) {
+            @content;
+        }
+    }
+}

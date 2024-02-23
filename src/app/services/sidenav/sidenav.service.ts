@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Injectable({
   providedIn: 'root'

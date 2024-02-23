@@ -24,8 +24,17 @@ h2 {
     width: 100%;
     @include flexbox($jc: space-between, $gap: 32px);
 
+    @include mq(xs) {
+        flex-direction: column;
+        gap: 0;
+    }
+
     .form {
         width: 70%;
+
+        @include mq(xs) {
+            width: 100%;
+        }
     }
 
     .input-container {
@@ -37,6 +46,10 @@ h2 {
 
         .p-r {
             padding-right: 8px;
+
+            @include mq(xs) {
+                padding-right: 0;
+            }
         }
 
         .p-l {

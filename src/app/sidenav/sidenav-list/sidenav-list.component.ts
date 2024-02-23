@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -17,6 +17,8 @@ export class SidenavListComponent implements OnInit {
 
   currentRoute: string = this.router.url;
 
+  @Output() closeSidenavMobileEvent = new EventEmitter<void>();
+
   constructor() {}
 
   ngOnInit() {
@@ -33,6 +35,10 @@ export class SidenavListComponent implements OnInit {
         }
       }
     })
+  }
+
+  closeSidenavMobile() {
+    this.closeSidenavMobileEvent.emit();
   }
 
   logout() {

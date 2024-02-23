@@ -1,3 +1,5 @@
+@import '../../../shared/styles/mixins.scss';
+
 mat-card {
     width: 100%;
     height: 100%;
@@ -16,6 +18,22 @@ mat-card {
         .chart-container {
             width: 100%;
             height: 100%;
+
+            @media(max-width: 1261px) {
+                height: 400px;
+            }
+
+            @media(max-width: 1142px) {
+                height: 100%;
+            }
+
+            @include mq(tablet) {
+                height: 400px;
+            }
+
+            @media (max-width: 894px) {
+                height: 100%;
+            }
 
             canvas {
                 max-width: 100%;

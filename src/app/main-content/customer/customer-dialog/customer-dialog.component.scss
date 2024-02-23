@@ -39,6 +39,7 @@
 .input-container {
    @include flexbox($gap: 24px);
    padding-bottom: 8px; 
+   width: 100%;
 }
 
 .form-field {
@@ -47,6 +48,14 @@
 
 .dialog-container {
     position: relative;
+
+    @include mq(mobile) {
+        width: 80vw;
+    }
+}
+
+.form-container {
+    width: 100%;
 }
 
 button {
