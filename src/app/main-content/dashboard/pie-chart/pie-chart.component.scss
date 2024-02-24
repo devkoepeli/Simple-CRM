@@ -24,10 +24,6 @@ mat-card {
                 @include flexbox();
             }
 
-            @media(max-width: 1142px) {
-                height: 100%;
-            }
-
             @include mq(tablet) {
                 height: 380px;
             }

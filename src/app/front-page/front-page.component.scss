@@ -10,6 +10,8 @@
     background-repeat: no-repeat;
     padding-left: 64px;
     padding-right: 64px;
+    padding-top: 48px;
+    padding-bottom: 48px;
     @include flexbox();
     position: relative;
     @include mq(tablet) {
@@ -19,13 +21,20 @@
     @include mq(mobile) {
         padding-left: 24px;
         padding-right: 24px;
+        height: 100vh;
+    }
+
+    @media only screen and (max-height: 480px) {
+        min-height: 100vh;
+        height: max-content;
+        padding-top: 96px;
     }
 
     img {
         position: absolute;
         top: 0;
         left: -30px;
-        padding: inherit;
+        padding-left: inherit;
         box-sizing: content-box;
         width: 250px;
         height: 100px;
