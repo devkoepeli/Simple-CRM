@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { FloatLabelType, MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CustomerDeleteDialogComponent } from './customer-delete-dialog/customer-delete-dialog.component';
 import { ParamsIdService } from '../../services/params-id/params-id.service';
@@ -23,7 +23,10 @@ import { StorageService } from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-customer-edit',
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'de'},
+    provideNativeDateAdapter()
+  ],
   standalone: true,
   imports: [
     MatProgressSpinnerModule,
@@ -49,7 +52,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   customerId!: string;
   unsubCustomer!: Unsubscribe;
   unsubCustomerData!: Subscription;
-  
+
   isLoading = false;
   isSaving = false;
   isSuccess = false;
@@ -58,7 +61,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   date!: Date;
 
   storageService = inject(StorageService);
-  loadingStatus: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; 
+  loadingStatus: 'initial' | 'uploading' | 'success' | 'fail' = 'initial';
 
   constructor(
     private route: ActivatedRoute,
@@ -95,14 +98,14 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     this.isSaving = true;
     try {
       this.savingSuccess();
-    } catch(e) {
+    } catch (e) {
       this.savingError();
     }
   }
 
   async savingSuccess() {
     if (this.customer.birthDate instanceof Date) {
-      this.customer.birthDate = this.customer.birthDate.toISOString().slice(0, 10);
+      this.customer.birthDate = this.formatDate(this.customer.birthDate);
     }
     await this.firestore.updateDocument('customers', this.customer);
     this.isSaving = false;
@@ -110,6 +113,22 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.isSuccess = false;
     }, 1800);
+  }
+
+  formatDate(date: Date): string {
+    let d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
   }
 
   savingError() {
@@ -129,7 +148,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
         const downloadUrl = await this.storageService.uploadImage(file);
         this.customer.imageUrl = downloadUrl;
         this.loadingStatus = 'success';
-      } catch(e) {
+      } catch (e) {
         this.loadingStatus = 'fail';
       }
     }

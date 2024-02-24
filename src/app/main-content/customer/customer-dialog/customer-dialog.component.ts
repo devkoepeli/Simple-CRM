@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { FloatLabelType, MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { Customer } from '../../../models/customer.interface';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -20,7 +20,10 @@ import { StorageService } from '../../../services/storage/storage.service';
 @Component({
   selector: 'app-customer-dialog',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'de'},
+    provideNativeDateAdapter()
+  ],
   imports: [
     MatDialogModule,
     MatButtonModule,
@@ -65,7 +68,7 @@ export class CustomerDialogComponent {
   saveCustomer() {
     this.isLoading = true;
     if (this.date) {
-      this.customer.birthDate = this.date.toISOString().slice(0, 10);
+      this.customer.birthDate = this.formatDate(this.date);
     }
     this.firestore.addDocument('customers', this.getCleanObject(this.customer))
       .then(() => {
@@ -74,6 +77,22 @@ export class CustomerDialogComponent {
       .catch((e) => {
         this.errorHandlingAddCustomer();
       });
+  }
+
+  formatDate(date: Date): string {
+    let d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
   }
 
   getCleanObject(object: Customer) {

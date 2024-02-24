@@ -59,7 +59,7 @@
                             <mat-label>Date of birth</mat-label>
                             <input matInput name="date" [(ngModel)]="customer.birthDate" [matDatepicker]="datepicker"
                                 [disabled]="isSaving">
-                            <mat-error>You must enter a valid date</mat-error>
+                            <mat-error>You must enter a valid date (DD.MM.YYYY)</mat-error>
                             <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                             <mat-datepicker #datepicker></mat-datepicker>
                         </mat-form-field>

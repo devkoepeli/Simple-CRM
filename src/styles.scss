@@ -27,7 +27,9 @@ input[type=number] {
 }
 
 .table-wrapper {
-  overflow-x: scroll;
+  @media (max-width: 1355px) {
+    overflow-x: scroll;
+  }
 }
 
 .table-data {
