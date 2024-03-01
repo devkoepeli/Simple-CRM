@@ -1,5 +1,13 @@
 <section>
-    <h2>Customers</h2>
+    <div class="header-container">
+        <h2>Customers</h2>
+        <div class="add-btn-container">
+            <button mat-fab color="primary" aria-label="button with a add icon"
+                matTooltip="Add new customer" (click)="openDialog()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
     <mat-card class="table-card">
         <mat-card-content>
             <div class="table-wrapper">
@@ -62,10 +70,4 @@
             </mat-paginator>
         </mat-card-content>
     </mat-card>
-    <div class="add-btn-container">
-        <button mat-fab color="primary" aria-label="button with a add icon"
-            matTooltip="Add new customer" (click)="openDialog()">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
 </section>
