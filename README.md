@@ -1,6 +1,8 @@
-# SimpleCrm
+# Simple CRM
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
+This project is a customer relationship management tool built with Angular as the frontend framework and Firebase as the backend with Firestore cloud, Authentication and Storage. This tool is intended to be used as a software for a e-commerce business to track customers and products and have a dashboard for all the KPI's.
+
+<img src="docs/crm.png" alt="Simple CRM" width="75%">
 
 ## Development server
 
